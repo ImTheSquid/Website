@@ -5,24 +5,17 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>Jack Hogan</title>
+	<meta name="description" content="Jack's Portfolio" />
 </svelte:head>
 
 <section>
 	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
+		Jack's Portfolio
 	</h1>
 
 	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
+		This site is a placeholder until I get more time to put into it. Check out my <a href="https://github.com/ImTheSquid" target="_blank" rel="noopener noreferrer">GitHub</a> or have some fun with the counter!
 	</h2>
 
 	<Counter />
@@ -39,21 +32,5 @@
 
 	h1 {
 		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
 	}
 </style>
