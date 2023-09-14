@@ -172,7 +172,7 @@
 		align-items: start;
 	}
 
-	#aboutGroup * {
+	#aboutGroup *:not(br) {
 		margin: .5em;
 		font-size: xx-large;
 		max-width: 50%;
