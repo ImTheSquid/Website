@@ -26,4 +26,10 @@
     a {
         margin: 1em;
     }
+
+    @media (max-width: 1000px) {
+        div {
+            width: 50%;
+        }
+    }
 </style>

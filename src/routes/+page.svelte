@@ -209,10 +209,13 @@
 		}
 
 		#links div {
-			flex-direction: column;
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			align-items: start;
+			margin: .2em;
 		}
 
-		#aboutGroup * {
+		#aboutGroup *:not(br) {
 			font-size: medium;
 		}
 	}
