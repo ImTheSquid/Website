@@ -32,6 +32,7 @@
 		-webkit-backdrop-filter: blur(3.4px);
 		border: 1px solid rgba(255, 255, 255, 0.33);
         user-select: none;
+		-webkit-user-select: none;
 	}
 
     p:hover {

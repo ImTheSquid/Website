@@ -13,7 +13,9 @@
 
 <svelte:head>
 	<title>Jack Hogan</title>
-	<meta name="description" content="Jack Hogan's Portfolio" />
+	<meta name="description" content="Jack Hogan's Portfolio"/>
+	<meta name="author" content="Jack Hogan"/>
+	<meta name="keywords" content="Jack Hogan, Computer Science, Artifical Intelligence, CS, AI, Math, Purdue"/>
 </svelte:head>
 
 <section id="hero" style="background-image: linear-gradient(to bottom, transparent 80%, var(--color-bg)) ,url({mountains})">
