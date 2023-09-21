@@ -113,6 +113,7 @@
 	#hero {
 		background-color: var(--color-bg);
 		background-position: center;
+		background-size: cover;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
