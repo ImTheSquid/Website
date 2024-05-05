@@ -120,7 +120,7 @@
 				link: 'https://github.com/ImTheSquid/CodeCheck',
 				title: 'CodeCheck',
 				description:
-					"CodeCheck is a piece of in-development software for a research project to try to detect plagiarism and algortihmic complexity in submitted assignments.<br/><br/> I'm coordinating research efforts on Abstract Syntax Trees combined with Graph Attention Networks and other machine learning techniques to find an optimal solution for parsing and acting upon the code we ingest.",
+					"CodeCheck is a piece of in-development software for a research project to try to detect plagiarism and algorithmic complexity in submitted assignments.<br/><br/> I'm coordinating research efforts on Abstract Syntax Trees combined with Graph Attention Networks and other machine learning techniques to find an optimal solution for parsing and acting upon the code we ingest.",
 				image: codeCheck,
 				imageAlt: 'A screenshot of the CodeCheck repository.'
 			}}
