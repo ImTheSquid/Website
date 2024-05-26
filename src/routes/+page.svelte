@@ -29,7 +29,7 @@
 		<h1 class="noDeco">Jack Hogan</h1>
 
 		<div>
-			<h2>Developer - Entrepeneur - Leader</h2>
+			<h2>Developer - Entrepreneur - Leader</h2>
 
 			<h2>Purdue CS, AI & Math '26</h2>
 		</div>
