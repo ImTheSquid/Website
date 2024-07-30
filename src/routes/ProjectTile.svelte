@@ -6,7 +6,7 @@
 </script>
 
 <a href={project.link} target="_blank">
-<div class="card ">
+<div class="card glassBackground">
     <img src={project.image} alt={project.imageAlt}/>
     <h3>{@html project.title}</h3>
     <p>{@html project.description}</p>

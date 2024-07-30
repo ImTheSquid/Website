@@ -19,13 +19,14 @@
 		name="keywords"
 		content="Jack Hogan, Computer Science, Artifical Intelligence, CS, AI, Math, Purdue"
 	/>
+	<meta name="darkreader-lock"/>
 </svelte:head>
 
 <section
 	id="hero"
 	style="background-image: linear-gradient(to bottom, transparent 80%, var(--color-bg)) ,url({mountains})"
 >
-	<div>
+	<div class="glassBackground">
 		<h1 class="noDeco">Jack Hogan</h1>
 
 		<div>
@@ -48,7 +49,7 @@
 	<div id="aboutGroup">
 		<img src={beach} alt="Me standing on a beach at Turks and Caicos." />
 		<p>
-			Hi! I'm Jack. I'm a sophomore at Purdue studying for a double major in Computer Science and
+			Hi! I'm Jack. I'm a junior at Purdue studying for a double major in Computer Science and
 			Artifical Intelligence with a minor in Mathematics. I have a wide range of interests from
 			programming to exercising, the outdoors, reading, skiing, exploration, and much more!<br /><br
 			/>
@@ -239,7 +240,6 @@
 	#hero > div {
 		padding: 2em;
 		/* From https://css.glass */
-		background: rgba(255, 255, 255, 0.23);
 		border-radius: 16px;
 		box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 		backdrop-filter: blur(3.4px);

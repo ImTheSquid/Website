@@ -18,6 +18,8 @@
 	color: var(--color-text);
 }
 
+
+
 body {
 	min-height: 100vh;
 	margin: 0;
@@ -108,19 +110,22 @@ button:focus:not(:focus-visible) {
 	white-space: nowrap;
 }
 
+.glassBackground {
+	background: rgba(255, 255, 255, 0.23);
+}
+
 .card {
 	padding: 1em;
 	display: flex;
 	flex-direction: column;
 
 	/* From https://css.glass */
-	background: rgba(255, 255, 255, 0.23);
 	border-radius: 16px;
 	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 	backdrop-filter: blur(3.4px);
 	-webkit-backdrop-filter: blur(3.4px);
 	border: 1px solid rgba(255, 255, 255, 0.33);
-	color: black;
+	color: var(--color-text);
 	transition: all 0.2s ease-in-out;
 }
 
@@ -194,3 +199,14 @@ button:focus:not(:focus-visible) {
 	}
   }
   
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-bg: #1D3D61;
+		--color-text: rgba(255, 255, 255, 0.9);
+		--color-theme-1: #A5D4F0;
+	}
+
+	.glassBackground {
+		background: rgba(80, 80, 80, 0.23);
+	}
+}

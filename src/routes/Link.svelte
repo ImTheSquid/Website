@@ -6,7 +6,7 @@
 </script>
 
 <a href={link.destination} target="_blank">
-    <div class="card">
+    <div class="card glassBackground">
         <slot />
         <h3>{link.name}</h3>
     </div>

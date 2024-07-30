@@ -7,7 +7,7 @@
 </script>
 
 <footer>
-    <p>Made with ❤️ and GRIT™ at <img src={purdue} alt="Purdue Logo" style="margin: .25rem 0;"/> with <img src={svelte} alt="Svelte Logo" style="height: 1.3em"/> & <svg class="with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24" style="color:var(--geist-foreground);width:24px;height:24px"><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg></p>
+    <p class="glassBackground">Made with ❤️ and GRIT™ at <img src={purdue} alt="Purdue Logo" style="margin: .25rem 0;"/> with <img src={svelte} alt="Svelte Logo" style="height: 1.3em"/> & <svg class="with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24" style="color:var(--geist-foreground);width:24px;height:24px"><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg></p>
 </footer>
 
 <style>
@@ -25,7 +25,6 @@
         justify-content: center;
         align-items: center;
         /* From https://css.glass */
-		background: rgba(255, 255, 255, 0.23);
 		border-radius: 50px;
 		box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 		backdrop-filter: blur(3.4px);
