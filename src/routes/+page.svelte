@@ -5,6 +5,7 @@
 	import jackSigapp from '$lib/images/jackSigapp.jpg';
 	import purdueHackersSign from '$lib/images/purdueHackersSign.png';
 	import peraton from '$lib/images/peraton.jpg';
+	import leidos from '$lib/images/leidos.jpg';
 	import tped3d from '$lib/images/tped3d.png';
 	import codeCheck from '$lib/images/codeCheck.png';
 	import beach from '$lib/images/jackBeach.jpg';
@@ -66,6 +67,15 @@
 	<h1>Projects & Positions</h1>
 
 	<div class="grid">
+		<ProjectTile
+			project={{
+				link: 'https://careers.leidos.com/pages/leidosinnovationscenter',
+				title: 'Leidos Innovations Center Software Engineering Intern',
+				description: 'The Leidos Innovations Center is Ledios&apos;s research and development division. During my internship I created and refined GPU-based signal processing algorithms in CUDA, Rust, and Python for real-time applications.<br/><br/>I also created a real-time machine learning model to lock onto radar targets hidden in interference patterns with time-aware strategies and PyTorch.',
+				image: leidos,
+				imageAlt: 'Ledios Innovations Center Logo',
+			}}
+		/>
 		<ProjectTile
 			project={{
 				link: 'https://purdueorbital.com',
