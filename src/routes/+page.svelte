@@ -20,7 +20,7 @@
 		name="keywords"
 		content="Jack Hogan, Computer Science, Artifical Intelligence, CS, AI, Math, Purdue"
 	/>
-	<meta name="darkreader-lock"/>
+	<meta name="darkreader-lock" />
 </svelte:head>
 
 <section
@@ -71,9 +71,10 @@
 			project={{
 				link: 'https://careers.leidos.com/pages/leidosinnovationscenter',
 				title: 'Leidos Innovations Center Software Engineering Intern',
-				description: 'The Leidos Innovations Center is Ledios&apos;s research and development division. During my internship I created and refined GPU-based signal processing algorithms in CUDA, Rust, and Python for real-time applications.<br/><br/>I also created a real-time machine learning model to lock onto radar targets hidden in interference patterns with time-aware strategies and PyTorch.',
+				description:
+					'The Leidos Innovations Center is Ledios&apos;s research and development division. During my internship I created and refined GPU-based signal processing algorithms in CUDA, Rust, and Python for real-time applications.<br/><br/>I also created a real-time machine learning model to lock onto radar targets hidden in interference patterns with time-aware strategies and PyTorch.',
 				image: leidos,
-				imageAlt: 'Ledios Innovations Center Logo',
+				imageAlt: 'Ledios Innovations Center Logo'
 			}}
 		/>
 		<ProjectTile
@@ -232,7 +233,7 @@
 	section {
 		/* flex: 0.6; */
 		width: 100hh;
-		margin: 1em;
+		margin: 4em;
 	}
 
 	#hero {
@@ -285,7 +286,7 @@
 
 	.grid {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 		align-items: start;
 	}
 
