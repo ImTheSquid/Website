@@ -119,7 +119,7 @@
 		/>
 		<ProjectTile
 			project={{
-				link: 'https://www.tpedatpurdue.com/',
+				link: 'https://boilerlink.purdue.edu/organization/tpedatpurdue',
 				title: 'Theme Park Engineering & Design at Purdue 3D-Printed Coaster',
 				description:
 					"TPED at Purdue is an organization dedicated to theme parks & the engineering behind them.<br/><br/> I'm on the Electronics subteam for the 3D coaster project where I'm working on an implementation plan for a complex system that will involve custom PCBs and software to drive a physical roller coaster control system.",
