@@ -99,10 +99,10 @@
 		/>
 		<ProjectTile
 			project={{
-				link: 'https://www.purduehackers.com/',
+				link: 'https://blog.purduehackers.com/posts/sign',
 				title: 'Purdue Hackers Sign',
 				description:
-					"Purdue Hackers is a club where people come together to hang out and make cool projects.<br/><br/> I'm working on a one meter tall RGB LED-based sign of our logo that links to an app for easy control with a custom circuit board and housing. We're in the final phases of production, connecting the controller to the internet and sealing up the enclosure.",
+					'Purdue Hackers is a club where people come together to hang out and make cool projects.<br/><br/> I made a one meter tall RGB LED-based sign of our logo with self-updating firmware and a custom circuit board and housing. We&apos;re now exploring new integrations for other Purdue Hackers memebers to integrate their own code into the Sign.',
 				image: purdueHackersSign,
 				imageAlt: 'The mostly-assembled sign.'
 			}}
