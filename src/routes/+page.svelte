@@ -199,7 +199,7 @@
 				/>
 			</svg>
 		</Link>
-		<Link link={{ destination: 'https://bsky.app/profile/jackhogan.dev', name: 'BlueSky' }}>
+		<Link link={{ destination: 'https://bsky.app/profile/jackhogan.me', name: 'BlueSky' }}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="currentColor"
