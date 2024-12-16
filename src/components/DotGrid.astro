@@ -1,0 +1,108 @@
+<script>
+  import debounce from "debounce";
+
+  const dotMap = new Map<{ x: number; y: number }, SVGCircleElement>();
+
+  const DOT_SPACING: number = 40;
+  const BASE_DOT_RADIUS: number = 2;
+  function createSvg() {
+    let svg = document.querySelector(".dots") as HTMLElement;
+
+    const content = document.getElementById("root-content");
+    if (!content) {
+      console.error("Unable to find root-content! Dot grid creation failed.");
+      return;
+    }
+    const width = content.scrollWidth;
+    const height = content.scrollHeight;
+
+    svg.setAttribute("width", width.toString());
+    svg.setAttribute("height", height.toString());
+
+    // Iterate over potential dot locations
+    // If there's a selector with that name, check if it's in bounds
+    // If it is, do nothing. If it isn't, remove it.
+    // If there isn't a selector with that name, create one
+    for (let x = DOT_SPACING; x < width - DOT_SPACING; x += DOT_SPACING) {
+      for (let y = DOT_SPACING; y < height - DOT_SPACING; y += DOT_SPACING) {
+        if (!dotMap.has({ x, y })) {
+          const dot = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle",
+          );
+          dot.setAttribute("cx", x.toString());
+          dot.setAttribute("cy", y.toString());
+          dot.setAttribute("r", BASE_DOT_RADIUS.toString());
+          dot.setAttribute("fill", "black");
+          svg.appendChild(dot);
+          dotMap.set({ x, y }, dot);
+        }
+      }
+    }
+  }
+
+  const MOUSE_RADIUS: number = 100;
+
+  let mouseFrame: number | null = null;
+
+  function mouseFollow(e: MouseEvent) {
+    if (mouseFrame) return;
+
+    mouseFrame = requestAnimationFrame(() => {
+      const svg = document.querySelector(".dots") as HTMLElement;
+      if (!svg) return;
+
+      // Mouse position
+      const mouseX = e.clientX + window.scrollX;
+      const mouseY = e.clientY + window.scrollY;
+
+      // Iterate through dots and calculate distance
+      const dots = svg.querySelectorAll("circle");
+      dots.forEach((dot) => {
+        const cx = parseFloat(dot.getAttribute("cx") || "0");
+        const cy = parseFloat(dot.getAttribute("cy") || "0");
+
+        const dx = mouseX - cx;
+        const dy = mouseY - cy;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < MOUSE_RADIUS) {
+          // Calculate brightness based on distance (closer = brighter)
+          const radius = BASE_DOT_RADIUS + (MOUSE_RADIUS - distance) / 30;
+          const brightness = Math.max(0, 1 - distance / MOUSE_RADIUS);
+          const colorValue = Math.round(255 * brightness);
+          dot.setAttribute("fill", `oklch(${brightness} 0.1332 226.06)`);
+          dot.setAttribute("r", radius.toString());
+        } else {
+          dot.setAttribute("fill", "black");
+          dot.setAttribute("r", BASE_DOT_RADIUS.toString());
+        }
+
+        mouseFrame = null;
+      });
+    });
+  }
+
+  window.addEventListener("load", createSvg);
+  window.addEventListener("resize", debounce(createSvg, 100));
+  window.addEventListener("mousemove", mouseFollow);
+</script>
+
+<svg class="dots"></svg>
+
+<style>
+  .dots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    will-change: transform;
+    pointer-events: none;
+    contain: layout style paint;
+    filter: blur(5px);
+  }
+
+  circle {
+    will-change: fill, transform;
+  }
+</style>

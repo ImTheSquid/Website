@@ -17,6 +17,9 @@ importers:
       astro:
         specifier: ^5.0.5
         version: 5.0.5(jiti@1.21.6)(rollup@4.28.1)(typescript@5.7.2)(yaml@2.6.1)
+      debounce:
+        specifier: ^2.2.0
+        version: 2.2.0
       tailwindcss:
         specifier: ^3.4.16
         version: 3.4.16
@@ -858,6 +861,10 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+
+  debounce@2.2.0:
+    resolution: {integrity: sha512-Xks6RUDLZFdz8LIdR6q0MTH44k7FikOmnh5xkSjMig6ch45afc8sjTjRQf3P6ax8dMgcQrYO/AR2RGWURrruqw==}
+    engines: {node: '>=18'}
 
   debug@4.4.0:
     resolution: {integrity: sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA==}
@@ -2747,6 +2754,8 @@ snapshots:
       which: 2.0.2
 
   cssesc@3.0.0: {}
+
+  debounce@2.2.0: {}
 
   debug@4.4.0:
     dependencies:
