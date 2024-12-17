@@ -1,0 +1,17 @@
+---
+export const prerender = false;
+
+const res = await fetch("https://id.purduehackers.com/api/scan", {
+  method: "POST",
+  body: JSON.stringify({
+    id: parseInt(process.env.PH_PASSPORT_ID ?? "0"),
+    secret: process.env.PH_PASSPORT_SECRET ?? "NOSECRET",
+  }),
+});
+
+if (!res.ok) {
+  res.text().then((t) => console.error(t));
+}
+
+return Astro.redirect("/", 302);
+---
