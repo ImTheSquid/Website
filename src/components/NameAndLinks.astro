@@ -1,0 +1,49 @@
+---
+import { Icon } from "astro-iconify";
+import IconLink from "./IconLink.astro";
+---
+
+<section class="flex-1 flex flex-col">
+  <div class="lg:flex-grow">
+    <h1 class="font-serif text-9xl pb-4">Jack<br />Hogan</h1>
+    <h2 class="text-3xl font-sans">Developer • Entrepreneur • Leader</h2>
+    <div class="flex flex-row mt-2">
+      <IconLink
+        name="ri:file-user-line"
+        href="https://raw.githubusercontent.com/ImTheSquid/Resume/master/JackHoganResume.pdf"
+      />
+      <IconLink name="ri:mail-line" href="mailto:jackhogan11@gmail.com" />
+      <IconLink
+        name="ri:bluesky-fill"
+        href="https://bsky.app/profile/jackhogan.me"
+      />
+      <IconLink name="ri:github-fill" href="https://github.com/ImTheSquid" />
+      <IconLink
+        name="ri:linkedin-box-fill"
+        href="https://www.linkedin.com/in/jackhogan11/"
+      />
+      <IconLink
+        name="ri:discord-fill"
+        href="https://discordapp.com/users/262055523896131584"
+      />
+    </div>
+    <div class="flex flex-row mt-2 text-lg font-sans">
+      <a
+        href="https://ring.purduehackers.com/previous?host=jackhogan.me"
+        target="_blank"
+        class="hover:underline p-1">🡰</a
+      >
+      <a
+        href="https://ring.purduehackers.com"
+        target="_blank"
+        class="hover:underline font-bold p-1">Purdue Hackers Webring</a
+      >
+      <a
+        href="https://ring.purduehackers.com/next?host=jackhogan.me"
+        target="_blank"
+        class="hover:underline p-1">🡲</a
+      >
+    </div>
+  </div>
+  <p class="font-sans mt-3 text-lg hidden lg:block">© Jack Hogan</p>
+</section>

@@ -9,12 +9,18 @@ import DotGrid from "../components/DotGrid.astro";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <title>Jack Hogan</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap");
+    </style>
   </head>
   <body>
     <DotGrid />
     <div id="root-content">
       <slot />
+
+      <!-- Put copyright on the bottom of the page if on mobile, otherwise put where page decides -->
+      <p class="block lg:hidden my-5 text-center">© Jack Hogan</p>
     </div>
   </body>
 </html>

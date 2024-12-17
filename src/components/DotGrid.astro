@@ -23,8 +23,16 @@
     // If there's a selector with that name, check if it's in bounds
     // If it is, do nothing. If it isn't, remove it.
     // If there isn't a selector with that name, create one
-    for (let x = DOT_SPACING; x < width - DOT_SPACING; x += DOT_SPACING) {
-      for (let y = DOT_SPACING; y < height - DOT_SPACING; y += DOT_SPACING) {
+    for (
+      let x = DOT_SPACING;
+      x < width - 2 * BASE_DOT_RADIUS;
+      x += DOT_SPACING
+    ) {
+      for (
+        let y = DOT_SPACING;
+        y < height - 2 * BASE_DOT_RADIUS;
+        y += DOT_SPACING
+      ) {
         if (!dotMap.has({ x, y })) {
           const dot = document.createElementNS(
             "http://www.w3.org/2000/svg",
