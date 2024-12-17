@@ -1,10 +1,16 @@
 <canvas id="dotCanvas"></canvas>
 
 <script>
+  const rootContent = document.getElementById("root-content") as HTMLElement;
   // WebGL setup
   const canvas = document.getElementById("dotCanvas") as HTMLCanvasElement;
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+
+  function calcCanvas() {
+    canvas.width = Math.max(rootContent.scrollWidth, window.innerWidth) - 1;
+    canvas.height = Math.max(rootContent.scrollHeight, window.innerHeight) - 1;
+  }
+
+  calcCanvas();
 
   const gl = canvas.getContext("webgl");
   if (!gl) {
@@ -71,7 +77,7 @@
       // Convert position to clip space [-1, 1]
       vec2 clipSpace = (a_position / u_resolution) * 2.0 - 1.0;
       gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
-      gl_PointSize = 4.0 + max(0.0, u_radius - distance(a_position, u_mouse)) / 30.0;  // Base dot size
+      gl_PointSize = 4.0 + max(0.0, u_radius - distance(a_position, u_mouse)) / 25.0;  // Base dot size
     }
   `;
 
@@ -138,45 +144,61 @@
   }
   gl.useProgram(program);
 
-  // Create grid of dot positions
-  const DOT_SPACING = 40;
-  const positions = [];
-  for (let x = 0; x < canvas.width; x += DOT_SPACING) {
-    for (let y = 0; y < canvas.height; y += DOT_SPACING) {
-      positions.push(x, y);
+  const positionBuffer = gl.createBuffer();
+  const aPosition = gl.getAttribLocation(program, "a_position");
+  let positions: number[] = [];
+  function generateDots() {
+    // Create grid of dot positions
+    const DOT_SPACING = 40;
+    positions = [];
+    for (let x = DOT_SPACING / 2; x < canvas.width; x += DOT_SPACING) {
+      for (let y = DOT_SPACING / 2; y < canvas.height; y += DOT_SPACING) {
+        positions.push(x, y);
+      }
     }
+
+    // Upload positions to GPU
+    gl!.bindBuffer(gl!.ARRAY_BUFFER, positionBuffer);
+    gl!.bufferData(
+      gl!.ARRAY_BUFFER,
+      new Float32Array(positions),
+      gl!.STATIC_DRAW,
+    );
+
+    gl!.enableVertexAttribArray(aPosition);
+    gl!.vertexAttribPointer(aPosition, 2, gl!.FLOAT, false, 0, 0);
   }
 
-  // Upload positions to GPU
-  const positionBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
-  const aPosition = gl.getAttribLocation(program, "a_position");
-  gl.enableVertexAttribArray(aPosition);
-  gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+  generateDots();
 
   // Uniforms
   const uResolution = gl.getUniformLocation(program, "u_resolution");
   const uMouse = gl.getUniformLocation(program, "u_mouse");
   const uRadius = gl.getUniformLocation(program, "u_radius");
 
-  gl.uniform2f(uResolution, canvas.width, canvas.height);
   let mouseX = canvas.width / 2;
   let mouseY = canvas.height / 2;
+
   const MOUSE_RADIUS = 150;
 
   // Update mouse position
   document.addEventListener("mousemove", (e) => {
     mouseX = e.clientX + window.scrollX;
-    mouseY = e.clientY + window.scrollY; // Flip y-axis
+    mouseY = e.clientY + window.scrollY;
   });
 
+  window.addEventListener("resize", () => {
+    calcCanvas();
+    generateDots();
+  });
+
+  gl.uniform1f(uRadius, MOUSE_RADIUS);
   // Render loop
   function render() {
+    gl!.viewport(0, 0, canvas.width, canvas.height);
+    gl!.uniform2f(uResolution, canvas.width, canvas.height);
     gl!.clear(gl!.COLOR_BUFFER_BIT);
     gl!.uniform2f(uMouse, mouseX, mouseY);
-    gl!.uniform1f(uRadius, MOUSE_RADIUS);
 
     gl!.drawArrays(gl!.POINTS, 0, positions.length / 2);
     requestAnimationFrame(render);
@@ -185,17 +207,18 @@
 </script>
 
 <style>
-  /* body {
+  body {
     margin: 0;
-    overflow: hidden;
-    background-color: black;
-  } */
+    /* overflow: hidden; */
+    /* background-color: black; */
+  }
   #dotCanvas {
     position: absolute;
     top: 0;
     left: 0;
     z-index: -1;
-    /* pointer-events: none; */
+    pointer-events: none;
     filter: blur(5px);
+    overflow: hidden;
   }
 </style>

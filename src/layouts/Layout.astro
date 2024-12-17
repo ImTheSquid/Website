@@ -16,11 +16,8 @@ import DotGrid from "../components/DotGrid.astro";
   </head>
   <body>
     <DotGrid />
-    <div id="root-content">
+    <div id="root-content" class="flex flex-col">
       <slot />
-
-      <!-- Put copyright on the bottom of the page if on mobile, otherwise put where page decides -->
-      <p class="block lg:hidden my-5 text-center">© Jack Hogan</p>
     </div>
   </body>
 </html>
