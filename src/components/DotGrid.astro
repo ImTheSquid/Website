@@ -1,115 +1,150 @@
+<canvas id="dotCanvas"></canvas>
+
 <script>
-  import debounce from "debounce";
+  // WebGL setup
+  const canvas = document.getElementById("dotCanvas") as HTMLCanvasElement;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
-  const dotMap = new Map<{ x: number; y: number }, SVGCircleElement>();
+  const gl = canvas.getContext("webgl");
+  if (!gl) {
+    console.error("WebGL not supported!");
+    throw new Error("WebGL not supported.");
+  }
 
-  const DOT_SPACING: number = 40;
-  const BASE_DOT_RADIUS: number = 2;
-  function createSvg() {
-    let svg = document.querySelector(".dots") as HTMLElement;
-
-    const content = document.getElementById("root-content");
-    if (!content) {
-      console.error("Unable to find root-content! Dot grid creation failed.");
-      return;
+  // Vertex shader source
+  const vertexShaderSrc = `
+    precision mediump float;
+    attribute vec2 a_position;  // Dot position (normalized)
+    uniform vec2 u_resolution;  // Canvas resolution
+    uniform vec2 u_mouse;
+    uniform float u_radius;
+    void main() {
+      // Convert position to clip space [-1, 1]
+      vec2 clipSpace = (a_position / u_resolution) * 2.0 - 1.0;
+      gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+      gl_PointSize = 4.0 + max(0.0, u_radius - distance(a_position, u_mouse)) / 30.0;  // Base dot size
     }
-    const width = content.scrollWidth;
-    const height = content.scrollHeight;
+  `;
 
-    svg.setAttribute("width", width.toString());
-    svg.setAttribute("height", height.toString());
+  // Fragment shader source
+  const fragmentShaderSrc = `
+    precision mediump float;
+    uniform vec2 u_mouse;  // Mouse position (normalized)
+    uniform float u_radius;  // Mouse interaction radius
+    uniform vec2 u_resolution;
+    void main() {
+      // Calculate distance from mouse
+      float dist = distance(gl_FragCoord.xy, vec2(u_mouse.x, u_resolution.y - u_mouse.y));
 
-    // Iterate over potential dot locations
-    // If there's a selector with that name, check if it's in bounds
-    // If it is, do nothing. If it isn't, remove it.
-    // If there isn't a selector with that name, create one
-    for (
-      let x = DOT_SPACING;
-      x < width - 2 * BASE_DOT_RADIUS;
-      x += DOT_SPACING
-    ) {
-      for (
-        let y = DOT_SPACING;
-        y < height - 2 * BASE_DOT_RADIUS;
-        y += DOT_SPACING
-      ) {
-        if (!dotMap.has({ x, y })) {
-          const dot = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "circle",
-          );
-          dot.setAttribute("cx", x.toString());
-          dot.setAttribute("cy", y.toString());
-          dot.setAttribute("r", BASE_DOT_RADIUS.toString());
-          dot.setAttribute("fill", "black");
-          svg.appendChild(dot);
-          dotMap.set({ x, y }, dot);
-        }
-      }
+      // Calculate brightness (closer = brighter)
+      float brightness = 1.0 - smoothstep(0.0, u_radius, dist);
+
+      // Set dot color using OKLCH-inspired values
+      float l = brightness;
+      gl_FragColor = vec4(l * 0.0235294118, l * 0.6823529412, l * 0.8666666667, 1.0);  // RGB based on brightness
+    }
+  `;
+
+  // Compile shader
+  function createShader(
+    gl: WebGLRenderingContext,
+    type: number,
+    source: string,
+  ) {
+    const shader = gl.createShader(type);
+    if (!shader) {
+      throw new Error("unable to create shader!");
+    }
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      console.error("Shader compile failed:", gl.getShaderInfoLog(shader));
+      gl.deleteShader(shader);
+      return null;
+    }
+    return shader;
+  }
+
+  // Create WebGL program
+  const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSrc);
+  const fragmentShader = createShader(
+    gl,
+    gl.FRAGMENT_SHADER,
+    fragmentShaderSrc,
+  );
+
+  if (!(vertexShader && fragmentShader)) {
+    throw new Error("unable to create shaders!");
+  }
+
+  const program = gl.createProgram();
+  gl.attachShader(program, vertexShader);
+  gl.attachShader(program, fragmentShader);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    console.error("Program link failed:", gl.getProgramInfoLog(program));
+  }
+  gl.useProgram(program);
+
+  // Create grid of dot positions
+  const DOT_SPACING = 40;
+  const positions = [];
+  for (let x = 0; x < canvas.width; x += DOT_SPACING) {
+    for (let y = 0; y < canvas.height; y += DOT_SPACING) {
+      positions.push(x, y);
     }
   }
 
-  const MOUSE_RADIUS: number = 100;
+  // Upload positions to GPU
+  const positionBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
-  let mouseFrame: number | null = null;
+  const aPosition = gl.getAttribLocation(program, "a_position");
+  gl.enableVertexAttribArray(aPosition);
+  gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
 
-  function mouseFollow(e: MouseEvent) {
-    if (mouseFrame) return;
+  // Uniforms
+  const uResolution = gl.getUniformLocation(program, "u_resolution");
+  const uMouse = gl.getUniformLocation(program, "u_mouse");
+  const uRadius = gl.getUniformLocation(program, "u_radius");
 
-    mouseFrame = requestAnimationFrame(() => {
-      const svg = document.querySelector(".dots") as HTMLElement;
-      if (!svg) return;
+  gl.uniform2f(uResolution, canvas.width, canvas.height);
+  let mouseX = canvas.width / 2;
+  let mouseY = canvas.height / 2;
+  const MOUSE_RADIUS = 150;
 
-      // Mouse position
-      const mouseX = e.clientX + window.scrollX;
-      const mouseY = e.clientY + window.scrollY;
+  // Update mouse position
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX + window.scrollX;
+    mouseY = e.clientY + window.scrollY; // Flip y-axis
+  });
 
-      // Iterate through dots and calculate distance
-      const dots = svg.querySelectorAll("circle");
-      dots.forEach((dot) => {
-        const cx = parseFloat(dot.getAttribute("cx") || "0");
-        const cy = parseFloat(dot.getAttribute("cy") || "0");
+  // Render loop
+  function render() {
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform2f(uMouse, mouseX, mouseY);
+    gl.uniform1f(uRadius, MOUSE_RADIUS);
 
-        const dx = mouseX - cx;
-        const dy = mouseY - cy;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < MOUSE_RADIUS) {
-          // Calculate brightness based on distance (closer = brighter)
-          const radius = BASE_DOT_RADIUS + (MOUSE_RADIUS - distance) / 30;
-          const brightness = Math.max(0, 1 - distance / MOUSE_RADIUS);
-          const colorValue = Math.round(255 * brightness);
-          dot.setAttribute("fill", `oklch(${brightness} 0.1332 226.06)`);
-          dot.setAttribute("r", radius.toString());
-        } else {
-          dot.setAttribute("fill", "black");
-          dot.setAttribute("r", BASE_DOT_RADIUS.toString());
-        }
-      });
-      mouseFrame = null;
-    });
+    gl.drawArrays(gl.POINTS, 0, positions.length / 2);
+    requestAnimationFrame(render);
   }
-
-  window.addEventListener("load", createSvg);
-  window.addEventListener("resize", debounce(createSvg, 100));
-  window.addEventListener("mousemove", mouseFollow);
+  render();
 </script>
 
-<svg class="dots"></svg>
-
 <style>
-  .dots {
+  /* body {
+    margin: 0;
+    overflow: hidden;
+    background-color: black;
+  } */
+  #dotCanvas {
     position: absolute;
     top: 0;
     left: 0;
     z-index: -1;
-    will-change: transform;
-    pointer-events: none;
-    contain: layout style paint;
+    /* pointer-events: none; */
     filter: blur(5px);
-  }
-
-  circle {
-    will-change: fill, transform;
   }
 </style>
