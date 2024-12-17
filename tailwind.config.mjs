@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        theme: "oklch(70% 0.1332 226.06)",
+        theme: "oklch(75% 0.1332 226.06)",
       },
     },
     fontFamily: {

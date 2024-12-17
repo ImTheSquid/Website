@@ -87,6 +87,7 @@
     uniform vec2 u_mouse;  // Mouse position (normalized)
     uniform float u_radius;  // Mouse interaction radius
     uniform vec2 u_resolution;
+    uniform int u_dark;
 
     ${oklchToRgb}
 
@@ -99,7 +100,8 @@
 
       // Set dot color using OKLCH-inspired values
       float l = brightness;
-      gl_FragColor = vec4(oklch2rgb(vec3(l, 0.1332, 226.06)), 1.0);  // RGB based on brightness
+      float dark = float(u_dark);
+      gl_FragColor = vec4(oklch2rgb(vec3((1.0 - dark) * l + dark * (1.0- l * 0.75), 0.1332, 226.06)), 1.0);  // RGB based on brightness
     }
   `;
 
@@ -175,6 +177,7 @@
   const uResolution = gl.getUniformLocation(program, "u_resolution");
   const uMouse = gl.getUniformLocation(program, "u_mouse");
   const uRadius = gl.getUniformLocation(program, "u_radius");
+  const uDark = gl.getUniformLocation(program, "u_dark");
 
   let mouseX = canvas.width / 2;
   let mouseY = canvas.height / 2;
@@ -192,13 +195,28 @@
     generateDots();
   });
 
+  let isDarkMode =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", (event) => {
+      isDarkMode = event.matches;
+    });
+
   gl.uniform1f(uRadius, MOUSE_RADIUS);
   // Render loop
   function render() {
     gl!.viewport(0, 0, canvas.width, canvas.height);
     gl!.uniform2f(uResolution, canvas.width, canvas.height);
+    if (isDarkMode) {
+      gl!.clearColor(0.0117647059, 0.0274509804, 0.0705882353, 1.0);
+    } else {
+      gl!.clearColor(0.95, 0.95, 0.95, 1.0);
+    }
     gl!.clear(gl!.COLOR_BUFFER_BIT);
     gl!.uniform2f(uMouse, mouseX, mouseY);
+    gl!.uniform1i(uDark, isDarkMode ? 1 : 0);
 
     gl!.drawArrays(gl!.POINTS, 0, positions.length / 2);
     requestAnimationFrame(render);
