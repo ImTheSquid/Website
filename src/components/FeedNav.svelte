@@ -8,7 +8,7 @@
 
   const pages: Page[] = [{name: "Me", route: "/"}, {name: "Work", route: "/work"}, {name: "Blog", route: "/blog"}];
 </script>
-<span class="flex flex-row text-3xl mb-5">
+<span class="flex flex-row text-2xl mb-5">
 {#each pages as {name, route}, i}
     <a href={route} class="{path.match(`^${route}/?$`) ? 'font-bold' : 'underline'}">{name}</a>
     {#if i < pages.length - 1}
