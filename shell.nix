@@ -10,5 +10,6 @@ pkgs.mkShell {
           corepack_latest
           nodejs_latest
           eslint
+          nodePackages.vercel
     ];
     }

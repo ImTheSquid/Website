@@ -1,13 +1,14 @@
 <canvas id="dotCanvas" transition:persist></canvas>
 
 <script>
-  const rootContent = document.getElementById("root-content") as HTMLElement;
   // WebGL setup
   const canvas = document.getElementById("dotCanvas") as HTMLCanvasElement;
 
   function calcCanvas() {
-    canvas.width = Math.max(rootContent.scrollWidth, window.innerWidth) - 1;
-    canvas.height = Math.max(rootContent.scrollHeight, window.innerHeight) - 1;
+    const scrollWidth = document.scrollingElement?.scrollWidth ?? 0;
+    const scrollHeight = document.scrollingElement?.scrollHeight ?? 0;
+    canvas.width = Math.max(scrollWidth, window.innerWidth) - 1;
+    canvas.height = Math.max(scrollHeight, window.innerHeight) - 1;
   }
 
   calcCanvas();
@@ -191,6 +192,15 @@
   });
 
   window.addEventListener("resize", () => {
+    calcCanvas();
+    generateDots();
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    // This runs on first page load and after every navigation.
+    console.log("hi");
+
+    console.log(document.scrollingElement!.scrollHeight);
     calcCanvas();
     generateDots();
   });
