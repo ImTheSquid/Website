@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-iconify";
 import IconLink from "./IconLink.astro";
+import Footer from "./Footer.astro";
 
 interface Props {
   hide: boolean;
@@ -35,23 +36,6 @@ const { hide } = Astro.props;
         href="https://discordapp.com/users/262055523896131584"
       />
     </div>
-    <div class="flex flex-row mt-2 text-lg font-sans">
-      <a
-        href="https://ring.purduehackers.com/previous?host=jackhogan.me"
-        target="_blank"
-        class="hover:underline p-1">←</a
-      >
-      <a
-        href="https://ring.purduehackers.com"
-        target="_blank"
-        class="hover:underline font-bold p-1">Purdue Hackers Webring</a
-      >
-      <a
-        href="https://ring.purduehackers.com/next?host=jackhogan.me"
-        target="_blank"
-        class="hover:underline p-1">→</a
-      >
-    </div>
   </div>
-  <p class="font-sans mt-3 text-lg hidden md:block">© Jack Hogan</p>
+  <Footer />
 </section>
