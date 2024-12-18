@@ -7,8 +7,10 @@ import tailwind from '@astrojs/tailwind';
 
 import vercel from '@astrojs/vercel';
 
+import svelte from '@astrojs/svelte';
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [mdx(), tailwind()],
+  integrations: [mdx(), tailwind(), svelte()],
   adapter: vercel()
 });

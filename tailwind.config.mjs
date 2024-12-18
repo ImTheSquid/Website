@@ -9,7 +9,8 @@ export default {
     },
     fontFamily: {
       sans: ["DM Sans", "sans-serif"],
-      serif: ["DM Serif Display", "serif"],
+      serif: ["DM Serif Text", "serif"],
+      title: ["DM Serif Display", "serif"],
     },
   },
   plugins: [],

@@ -1,4 +1,4 @@
-<canvas id="dotCanvas"></canvas>
+<canvas id="dotCanvas" transition:persist></canvas>
 
 <script>
   const rootContent = document.getElementById("root-content") as HTMLElement;
@@ -186,8 +186,8 @@
 
   // Update mouse position
   document.addEventListener("mousemove", (e) => {
-    mouseX = e.clientX + window.scrollX;
-    mouseY = e.clientY + window.scrollY;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
   });
 
   window.addEventListener("resize", () => {
@@ -215,7 +215,7 @@
       gl!.clearColor(0.9764705882, 0.9803921569, 0.9843137255, 1.0);
     }
     gl!.clear(gl!.COLOR_BUFFER_BIT);
-    gl!.uniform2f(uMouse, mouseX, mouseY);
+    gl!.uniform2f(uMouse, mouseX + window.scrollX, mouseY + window.scrollY);
     gl!.uniform1i(uDark, isDarkMode ? 1 : 0);
 
     gl!.drawArrays(gl!.POINTS, 0, positions.length / 2);

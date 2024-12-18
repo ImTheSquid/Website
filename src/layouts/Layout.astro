@@ -1,5 +1,11 @@
 ---
 import DotGrid from "../components/DotGrid.astro";
+import Footer from "../components/Footer.astro";
+import NameAndLinks from "../components/NameAndLinks.astro";
+import FeedNav from "../components/FeedNav.svelte";
+import { ClientRouter } from "astro:transitions";
+
+const path = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -12,13 +18,26 @@ import DotGrid from "../components/DotGrid.astro";
     <meta name="darkreader-lock" />
     <title>Jack Hogan</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&family=DM+Serif+Text:ital@0;1&display=swap");
     </style>
+    <ClientRouter />
   </head>
   <body class="bg-gray-50 dark:bg-gray-950 dark:text-gray-100">
     <DotGrid />
-    <div id="root-content" class="flex flex-col selection:bg-theme">
-      <slot />
+    <div id="root-content" class="selection:bg-theme">
+      <div class="flex p-6 flex-col md:flex-row w-screen h-screen">
+        <NameAndLinks hide={true} />
+        <NameAndLinks hide={false} />
+
+        <div class="flex-1">
+          <FeedNav {path} />
+          <slot />
+        </div>
+        <div id="empty" class="flex-shrink basis-1/4 hidden lg:block"></div>
+        <div class="block md:hidden">
+          <Footer />
+        </div>
+      </div>
     </div>
   </body>
 </html>
