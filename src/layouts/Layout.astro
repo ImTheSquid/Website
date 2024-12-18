@@ -24,19 +24,20 @@ const path = Astro.url.pathname;
   </head>
   <body class="bg-gray-50 dark:bg-gray-950 dark:text-gray-100">
     <DotGrid />
-    <div id="root-content" class="selection:bg-theme">
-      <div class="flex p-6 flex-col md:flex-row w-screen h-screen">
-        <NameAndLinks hide={true} />
-        <NameAndLinks hide={false} />
+    <div
+      id="root-content"
+      class="selection:bg-theme flex p-6 flex-col md:flex-row w-screen h-screen"
+    >
+      <NameAndLinks hide={true} />
+      <NameAndLinks hide={false} />
 
-        <div class="flex-1">
-          <FeedNav {path} />
-          <slot />
-        </div>
-        <div id="empty" class="flex-shrink basis-1/4 hidden lg:block"></div>
-        <div class="block md:hidden">
-          <Footer />
-        </div>
+      <div class="flex-1">
+        <FeedNav {path} />
+        <slot />
+      </div>
+      <div id="empty" class="flex-shrink basis-1/4 hidden lg:block"></div>
+      <div class="block md:hidden">
+        <Footer />
       </div>
     </div>
   </body>

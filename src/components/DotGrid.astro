@@ -1,12 +1,17 @@
 <canvas id="dotCanvas" transition:persist></canvas>
 
 <script>
+  let rootContent = document.getElementById("root-content");
   // WebGL setup
   const canvas = document.getElementById("dotCanvas") as HTMLCanvasElement;
 
   function calcCanvas() {
-    const scrollWidth = document.scrollingElement?.scrollWidth ?? 0;
-    const scrollHeight = document.scrollingElement?.scrollHeight ?? 0;
+    rootContent = document.getElementById("root-content");
+    if (!rootContent) {
+      throw new Error("No root content!");
+    }
+    const scrollWidth = rootContent.scrollWidth ?? 0;
+    const scrollHeight = rootContent.scrollHeight ?? 0;
     canvas.width = Math.max(scrollWidth, window.innerWidth) - 1;
     canvas.height = Math.max(scrollHeight, window.innerHeight) - 1;
   }
@@ -197,10 +202,6 @@
   });
 
   document.addEventListener("astro:page-load", () => {
-    // This runs on first page load and after every navigation.
-    console.log("hi");
-
-    console.log(document.scrollingElement!.scrollHeight);
     calcCanvas();
     generateDots();
   });
@@ -217,6 +218,14 @@
   gl.uniform1f(uRadius, MOUSE_RADIUS);
   // Render loop
   function render() {
+    // if (!rootContent) {
+    //   throw new Error("No root content!");
+    // }
+    // const scrollWidth = rootContent.scrollWidth ?? 0;
+    // const scrollHeight = rootContent.scrollHeight ?? 0;
+    // canvas.width = Math.max(scrollWidth, window.innerWidth) - 1;
+    // canvas.height = Math.max(scrollHeight, window.innerHeight) - 1;
+
     gl!.viewport(0, 0, canvas.width, canvas.height);
     gl!.uniform2f(uResolution, canvas.width, canvas.height);
     if (isDarkMode) {
