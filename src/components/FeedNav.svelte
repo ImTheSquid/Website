@@ -10,7 +10,7 @@
 </script>
 <span class="flex flex-row text-3xl mb-5">
 {#each pages as {name, route}, i}
-    <a href={route} class="{path === route ? 'font-bold' : 'underline'}">{name}</a>
+    <a href={route} class="{path.match(`^${route}/?$`) ? 'font-bold' : 'underline'}">{name}</a>
     {#if i < pages.length - 1}
         <p class="mx-3 font-bold">/</p>
         {/if}
