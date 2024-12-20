@@ -125,6 +125,24 @@
     generateDots();
   });
 
+  let currentBox: Element | null = null;
+  let boxBrightness = 0;
+
+  document.addEventListener("dotenter", (e) => {
+    const { detail } = e as CustomEvent;
+    const elem = detail as Element;
+    console.log("ENTER");
+    currentBox = elem;
+  });
+
+  document.addEventListener("dotleave", (e) => {
+    const { detail } = e as CustomEvent;
+    const elem = detail as Element;
+    if (elem === currentBox) {
+      currentBox = null;
+    }
+  });
+
   let isDarkMode =
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -135,8 +153,12 @@
     });
 
   gl.uniform1f(uRadius, MOUSE_RADIUS);
+
+  const uBox = gl.getUniformLocation(program, "u_box");
+  const uBoxBrightness = gl.getUniformLocation(program, "u_boxBrightness");
   // Render loop
-  function render() {
+  let lastFrameTime = 0;
+  function render(dt: DOMHighResTimeStamp) {
     // if (!rootContent) {
     //   throw new Error("No root content!");
     // }
@@ -144,6 +166,17 @@
     // const scrollHeight = rootContent.scrollHeight ?? 0;
     // canvas.width = Math.max(scrollWidth, window.innerWidth) - 1;
     // canvas.height = Math.max(scrollHeight, window.innerHeight) - 1;
+    const delta = (dt - lastFrameTime) * 5e-3; // Calculate time delta
+    lastFrameTime = dt; // Update the last frame time
+
+    if (currentBox !== null) {
+      const { top, left, bottom, right } = currentBox.getBoundingClientRect();
+      gl!.uniform4f(uBox, left, bottom, right, top);
+      boxBrightness = Math.min(boxBrightness + delta, 1.0);
+    } else {
+      boxBrightness = Math.max(boxBrightness - delta, 0.0);
+    }
+    gl!.uniform1f(uBoxBrightness, boxBrightness);
 
     gl!.viewport(0, 0, canvas.width, canvas.height);
     gl!.uniform2f(uResolution, canvas.width, canvas.height);
@@ -159,7 +192,7 @@
     gl!.drawArrays(gl!.POINTS, 0, positions.length / 2);
     requestAnimationFrame(render);
   }
-  render();
+  render(0);
 </script>
 
 <style>
