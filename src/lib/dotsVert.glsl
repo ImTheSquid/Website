@@ -19,5 +19,5 @@ void main() {
     b.w = u_resolution.y - b.w;
     vec4 boxClip = vec4(b.xy / u_resolution, b.zw / u_resolution) * 2.0 - 1.0;
     gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
-    gl_PointSize = 4.0 + max(max(0.0, u_radius - distance(a_position, u_mouse)), pointIsInBox(clipSpace * vec2(1, -1), boxClip) * u_radius * u_boxBrightness * 0.75) / 25.0; // Base dot size
+    gl_PointSize = 4.0 + max(max(0.0, u_radius - distance(a_position, u_mouse)), pointIsInBox(clipSpace * vec2(1, -1), boxClip) * u_radius * u_boxBrightness * 0.5) / 25.0; // Base dot size
 }
