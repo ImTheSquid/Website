@@ -1,8 +1,17 @@
 ---
 import FeedContainer from "../components/FeedContainer.astro";
+import WorkItem from "../components/WorkItem.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-  <FeedContainer />
+  <FeedContainer>
+    <WorkItem
+      title="Purdue Hackers"
+      position="Engineering Division Lead"
+      timePeriod="2024 - Present"
+    >
+      <p>sign sign sign</p>
+    </WorkItem>
+  </FeedContainer>
 </Layout>
