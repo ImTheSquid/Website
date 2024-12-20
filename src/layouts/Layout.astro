@@ -125,6 +125,8 @@ const animation: TransitionDirectionalAnimations = {
 </style>
 
 <script>
+  import { dotHighlight } from "../lib/events";
+
   document.addEventListener("astro:before-preparation", (ev) => {
     const fPath = ev.from.pathname;
     const tPath = ev.to.pathname;
@@ -135,6 +137,12 @@ const animation: TransitionDirectionalAnimations = {
       ev.direction = "back";
     } else {
       ev.direction = "forward";
+    }
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    for (const element of document.getElementsByClassName("dot-control")) {
+      dotHighlight(element);
     }
   });
 </script>
