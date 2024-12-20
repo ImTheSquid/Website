@@ -171,7 +171,13 @@
 
     if (currentBox !== null) {
       const { top, left, bottom, right } = currentBox.getBoundingClientRect();
-      gl!.uniform4f(uBox, left, bottom, right, top);
+      gl!.uniform4f(
+        uBox,
+        left,
+        bottom + window.scrollY,
+        right,
+        top + window.scrollY,
+      );
       boxBrightness = Math.min(boxBrightness + delta, 1.0);
     } else {
       boxBrightness = Math.max(boxBrightness - delta, 0.0);
