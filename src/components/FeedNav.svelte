@@ -16,7 +16,7 @@
 <span class="flex flex-row text-2xl mb-5">
   {#each pages as { name, route }, i}
     {#if !path.match(`^${route}/?$`)}
-      <a href={route} class="underline">{name}</a>
+        <a href={route} class="hover:underline">{name}</a>
     {:else}
       <p class="font-bold">{name}</p>
     {/if}
