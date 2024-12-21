@@ -6,7 +6,6 @@ pkgs.mkShell {
       sass
           tailwindcss
           prettierd
-          nixd
           corepack_latest
           nodejs_latest
           eslint
