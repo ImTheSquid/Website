@@ -1,3 +1,5 @@
+import defaultTheme from "tailwindcss/defaultTheme";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
@@ -8,9 +10,10 @@ export default {
       },
     },
     fontFamily: {
-      sans: ["DM Sans", "sans-serif"],
-      serif: ["DM Serif Text", "serif"],
-      title: ["DM Serif Display", "serif"],
+      sans: ["DM Sans", ...defaultTheme.fontFamily.sans],
+      serif: ["DM Serif Text", ...defaultTheme.fontFamily.serif],
+      title: ["DM Serif Display", ...defaultTheme.fontFamily.serif],
+      mono: ["DM Mono", ...defaultTheme.fontFamily.mono],
     },
   },
   plugins: [],
