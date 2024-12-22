@@ -10,4 +10,15 @@ const work = defineCollection({
   }),
 });
 
-export const collections = { work };
+const blog = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    publishDate: z.date(),
+    tags: z.array(z.string()),
+    lastUpdateDate: z.date().optional(),
+    description: z.string(),
+  }),
+});
+
+export const collections = { work, blog };

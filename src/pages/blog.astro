@@ -1,8 +1,29 @@
 ---
+import { getCollection } from "astro:content";
 import FeedContainer from "../components/FeedContainer.astro";
 import Layout from "../layouts/Layout.astro";
+import BlogItem from "../components/BlogItem.astro";
+
+const entries = await getCollection("blog");
 ---
 
 <Layout>
-  <FeedContainer />
+  <FeedContainer>
+    {
+      entries
+        .sort(
+          (a, b) => a.data.publishDate.valueOf() - b.data.publishDate.valueOf(),
+        )
+        .map((post) => (
+          <BlogItem
+            title={post.data.title}
+            description={post.data.description}
+            publishDate={post.data.publishDate}
+            lastUpdatedDate={post.data.lastUpdateDate}
+            tags={post.data.tags}
+            href=`/blog/${post.slug}`
+          />
+        ))
+    }
+  </FeedContainer>
 </Layout>
