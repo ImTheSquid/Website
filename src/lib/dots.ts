@@ -10,12 +10,12 @@ interface Size {
 }
 
 export class DotCanvas {
-  private canvas: HTMLCanvasElement;
+  private canvas: HTMLCanvasElement | OffscreenCanvas;
   private gl: WebGLRenderingContext;
   private program: WebGLProgram;
   private positionBuffer: WebGLBuffer;
   private lastCanvasSize: Size;
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement | OffscreenCanvas) {
     this.canvas = canvas;
     const g = this.canvas.getContext("webgl");
     if (!g) {
