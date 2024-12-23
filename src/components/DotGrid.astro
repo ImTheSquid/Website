@@ -1,12 +1,10 @@
 <canvas id="dotCanvas" transition:persist></canvas>
 
 <script>
-  import oklchToRgb from "../lib/oklchToRgb.glsl?raw";
-  import vertexShaderSrc from "../lib/dotsVert.glsl?raw";
-  import rawFragment from "../lib/dotsFrag.glsl?raw";
+  import { DotCanvas } from "@lib/dots";
   let rootContent = document.getElementById("root-content");
-  // WebGL setup
   const canvas = document.getElementById("dotCanvas") as HTMLCanvasElement;
+  const dots = new DotCanvas(canvas);
 
   function calcCanvas() {
     rootContent = document.getElementById("root-content");
@@ -21,93 +19,8 @@
 
   calcCanvas();
 
-  const gl = canvas.getContext("webgl");
-  if (!gl) {
-    console.error("WebGL not supported!");
-    throw new Error("WebGL not supported.");
-  }
-
-  // Fragment shader source
-  const fragmentShaderSrc = rawFragment.replace("#include oklch", oklchToRgb);
-
-  // Compile shader
-  function createShader(
-    gl: WebGLRenderingContext,
-    type: number,
-    source: string,
-  ) {
-    const shader = gl.createShader(type);
-    if (!shader) {
-      throw new Error("unable to create shader!");
-    }
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      console.error("Shader compile failed:", gl.getShaderInfoLog(shader));
-      gl.deleteShader(shader);
-      return null;
-    }
-    return shader;
-  }
-
-  // Create WebGL program
-  const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSrc);
-  const fragmentShader = createShader(
-    gl,
-    gl.FRAGMENT_SHADER,
-    fragmentShaderSrc,
-  );
-
-  if (!(vertexShader && fragmentShader)) {
-    throw new Error("unable to create shaders!");
-  }
-
-  const program = gl.createProgram();
-  gl.attachShader(program, vertexShader);
-  gl.attachShader(program, fragmentShader);
-  gl.linkProgram(program);
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    console.error("Program link failed:", gl.getProgramInfoLog(program));
-  }
-  gl.useProgram(program);
-
-  const positionBuffer = gl.createBuffer();
-  const aPosition = gl.getAttribLocation(program, "a_position");
-  let positions: number[] = [];
-  function generateDots() {
-    // Create grid of dot positions
-    const DOT_SPACING = 40;
-    positions = [];
-    for (let x = DOT_SPACING / 2; x < canvas.width; x += DOT_SPACING) {
-      for (let y = DOT_SPACING / 2; y < canvas.height; y += DOT_SPACING) {
-        positions.push(x, y);
-      }
-    }
-
-    // Upload positions to GPU
-    gl!.bindBuffer(gl!.ARRAY_BUFFER, positionBuffer);
-    gl!.bufferData(
-      gl!.ARRAY_BUFFER,
-      new Float32Array(positions),
-      gl!.STATIC_DRAW,
-    );
-
-    gl!.enableVertexAttribArray(aPosition);
-    gl!.vertexAttribPointer(aPosition, 2, gl!.FLOAT, false, 0, 0);
-  }
-
-  generateDots();
-
-  // Uniforms
-  const uResolution = gl.getUniformLocation(program, "u_resolution");
-  const uMouse = gl.getUniformLocation(program, "u_mouse");
-  const uRadius = gl.getUniformLocation(program, "u_radius");
-  const uDark = gl.getUniformLocation(program, "u_dark");
-
   let mouseX = -1000;
   let mouseY = -1000;
-
-  const MOUSE_RADIUS = 150;
 
   // Update mouse position
   document.addEventListener("mousemove", (e) => {
@@ -117,16 +30,15 @@
 
   window.addEventListener("resize", () => {
     calcCanvas();
-    generateDots();
+    dots.generateDots();
   });
 
   document.addEventListener("astro:page-load", () => {
     calcCanvas();
-    generateDots();
+    dots.generateDots();
   });
 
   let currentBox: Element | null = null;
-  let boxBrightness = 0;
 
   document.addEventListener("dotenter", (e) => {
     const { detail } = e as CustomEvent;
@@ -151,43 +63,29 @@
       isDarkMode = event.matches;
     });
 
-  gl.uniform1f(uRadius, MOUSE_RADIUS);
-
-  const uBox = gl.getUniformLocation(program, "u_box");
-  const uBoxBrightness = gl.getUniformLocation(program, "u_boxBrightness");
   // Render loop
   let lastFrameTime = 0;
   function render(dt: DOMHighResTimeStamp) {
     const delta = (dt - lastFrameTime) * 5e-3; // Calculate time delta
     lastFrameTime = dt; // Update the last frame time
 
-    if (currentBox !== null) {
-      const { top, left, bottom, right } = currentBox.getBoundingClientRect();
-      gl!.uniform4f(
-        uBox,
-        left,
-        bottom + window.scrollY,
-        right,
-        top + window.scrollY,
-      );
-      boxBrightness = Math.min(boxBrightness + delta, 1.0);
-    } else {
-      boxBrightness = Math.max(boxBrightness - delta, 0.0);
-    }
-    gl!.uniform1f(uBoxBrightness, boxBrightness);
+    dots.render({
+      box:
+        currentBox !== null
+          ? {
+              top: currentBox.getBoundingClientRect().top + window.scrollY,
+              bottom:
+                currentBox.getBoundingClientRect().bottom + window.scrollY,
+              left: currentBox.getBoundingClientRect().left + window.scrollX,
+              right: currentBox.getBoundingClientRect().right + window.scrollX,
+            }
+          : null,
+      isDarkMode,
+      delta,
+      mouseX: mouseX + window.scrollX,
+      mouseY: mouseY + window.scrollY,
+    });
 
-    gl!.viewport(0, 0, canvas.width, canvas.height);
-    gl!.uniform2f(uResolution, canvas.width, canvas.height);
-    if (isDarkMode) {
-      gl!.clearColor(0.0117647059, 0.0274509804, 0.0705882353, 1.0);
-    } else {
-      gl!.clearColor(0.9764705882, 0.9803921569, 0.9843137255, 1.0);
-    }
-    gl!.clear(gl!.COLOR_BUFFER_BIT);
-    gl!.uniform2f(uMouse, mouseX + window.scrollX, mouseY + window.scrollY);
-    gl!.uniform1i(uDark, isDarkMode ? 1 : 0);
-
-    gl!.drawArrays(gl!.POINTS, 0, positions.length / 2);
     requestAnimationFrame(render);
   }
   render(0);
