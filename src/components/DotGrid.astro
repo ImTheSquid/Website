@@ -4,7 +4,7 @@
   import { DotCanvas } from "@lib/dots";
   let rootContent = document.getElementById("root-content");
   const canvas = document.getElementById("dotCanvas") as HTMLCanvasElement;
-  const dots = new DotCanvas(canvas);
+  let dots = new DotCanvas(canvas);
 
   function calcCanvas() {
     rootContent = document.getElementById("root-content");
@@ -34,6 +34,9 @@
   });
 
   document.addEventListener("astro:page-load", () => {
+    dots = new DotCanvas(
+      document.getElementById("dotCanvas") as HTMLCanvasElement,
+    );
     calcCanvas();
     dots.generateDots();
   });

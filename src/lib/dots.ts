@@ -4,11 +4,17 @@ import rawFragment from "@lib/dotsFrag.glsl?raw";
 
 const MOUSE_RADIUS = 150;
 
+interface Size {
+  width: number;
+  height: number;
+}
+
 export class DotCanvas {
   private canvas: HTMLCanvasElement;
   private gl: WebGLRenderingContext;
   private program: WebGLProgram;
   private positionBuffer: WebGLBuffer;
+  private lastCanvasSize: Size;
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
     const g = this.canvas.getContext("webgl");
@@ -48,6 +54,13 @@ export class DotCanvas {
     this.gl.useProgram(this.program);
 
     this.positionBuffer = this.gl.createBuffer();
+
+    this.lastCanvasSize = {
+      width: this.canvas.width,
+      height: this.canvas.height,
+    };
+
+    this.generateDots();
   }
 
   // Compile shader
@@ -108,6 +121,17 @@ export class DotCanvas {
       "u_boxBrightness",
     )!;
 
+    if (
+      this.lastCanvasSize.width !== this.canvas.width ||
+      this.lastCanvasSize.height !== this.canvas.height
+    ) {
+      this.lastCanvasSize = {
+        width: this.canvas.width,
+        height: this.canvas.height,
+      };
+      this.generateDots();
+    }
+
     if (box) {
       const { left, right, top, bottom } = box;
       this.gl.uniform4f(
@@ -134,7 +158,7 @@ export class DotCanvas {
       this.gl.clearColor(0.9764705882, 0.9803921569, 0.9843137255, 1.0);
     }
     this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-    this.gl.uniform2f(uMouse, mouseX + window.scrollX, mouseY + window.scrollY);
+    this.gl.uniform2f(uMouse, mouseX, mouseY);
     this.gl.uniform1i(uDark, isDarkMode ? 1 : 0);
 
     this.gl.drawArrays(this.gl.POINTS, 0, this.positions.length / 2);
