@@ -13,6 +13,7 @@
   $effect(() => {
     width = Math.max(width, 1);
     height = Math.max(height, 1);
+    blur = Math.max(blur, 0);
 
     if (c && canv) {
       canv.width = width;
@@ -26,12 +27,16 @@
       });
 
       const bcanvas = document.getElementById("genblur") as HTMLCanvasElement;
+      // bcanvas.width += 2 * blur;
+      // bcanvas.height += 2 * blur;
       const ctx = bcanvas.getContext("2d")!;
       ctx.clearRect(0, 0, bcanvas.width, bcanvas.height);
       if (isDarkMode) {
         ctx.fillStyle = "color: #030712;";
-        ctx.fillRect(-blur, -blur, bcanvas.width + blur, bcanvas.height + blur);
+      } else {
+        ctx.fillStyle = "color: #f9fafb";
       }
+      ctx.fillRect(0, 0, bcanvas.width, bcanvas.height);
       ctx.filter = `blur(${blur}px)`;
       ctx.drawImage(canv.transferToImageBitmap(), 0, 0);
     }

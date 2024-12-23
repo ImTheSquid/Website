@@ -1,19 +1,19 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-import BlogLayout from "../../layouts/BlogLayout.astro";
-import FormattedDate from "../../components/FormattedDate.astro";
-import BlogTag from "../../components/BlogTag.astro";
+import BlogLayout from "@layouts/BlogLayout.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import BlogTag from "@components/BlogTag.astro";
 import Icon from "astro-iconify";
-import Link from "../../components/content/Link.astro";
-import UnorderedList from "../../components/content/UnorderedList.astro";
-import OrderedList from "../../components/content/OrderedList.astro";
-import H1 from "../../components/content/H1.astro";
-import H2 from "../../components/content/H2.astro";
-import H3 from "../../components/content/H3.astro";
-import Hr from "../../components/content/Hr.astro";
-import Image from "../../components/content/Image.astro";
-import Blockquote from "../../components/content/Blockquote.astro";
+import Link from "@components/content/Link.astro";
+import UnorderedList from "@components/content/UnorderedList.astro";
+import OrderedList from "@components/content/OrderedList.astro";
+import H1 from "@components/content/H1.astro";
+import H2 from "@components/content/H2.astro";
+import H3 from "@components/content/H3.astro";
+import Hr from "@components/content/Hr.astro";
+import Image from "@components/content/Image.astro";
+import Blockquote from "@components/content/Blockquote.astro";
 
 export const getStaticPaths = (async () => {
   const entries = await getCollection("blog");

@@ -5,6 +5,8 @@ import NameAndLinks from "@components/NameAndLinks.astro";
 import FeedNav from "@components/FeedNav.svelte";
 import { ClientRouter } from "astro:transitions";
 import type { TransitionDirectionalAnimations } from "astro";
+import { SEO } from "astro-seo";
+import { OG_TITLE, OG_DESCRIPTION, SITE_URL } from "@lib/consts";
 
 import "@fontsource-variable/dm-sans";
 import "@fontsource/dm-mono";
@@ -65,6 +67,22 @@ const animation: TransitionDirectionalAnimations = {
     <meta name="darkreader-lock" />
     <title>Jack Hogan</title>
     <ClientRouter />
+    <SEO
+      title={OG_TITLE}
+      description={OG_DESCRIPTION}
+      openGraph={{
+        basic: {
+          type: "website",
+          title: OG_TITLE,
+          image: `${SITE_URL}/og.png`,
+        },
+        optional: {
+          description: OG_DESCRIPTION,
+          locale: "en-US",
+          siteName: "jackhogan.me",
+        },
+      }}
+    />
   </head>
   <body
     class="bg-gray-50 dark:bg-gray-950 dark:text-gray-100 overflow-x-hidden"

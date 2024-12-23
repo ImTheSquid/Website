@@ -11,8 +11,12 @@
     "paths": {
       "@lib/*": ["./src/lib/*"],
       "@components/*": ["./src/components/*"],
-      "@layouts/*": ["./src/layouts/*"]
+      "@layouts/*": ["./src/layouts/*"],
+      "@assets/*": ["./src/assets/*"]
     },
-    "baseUrl": "."
+    "baseUrl": ".",
+    "types": ["vite-plugin-arraybuffer/types", "vite-plugin-data-url/types"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }

@@ -1,4 +1,5 @@
 import rss from "@astrojs/rss";
+import { SITE_URL } from "@lib/consts";
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
@@ -8,11 +9,6 @@ export const GET: APIRoute = async ({ site }) => {
   const sorted_posts = posts.sort(
     (a, b) => Number(b.data.publishDate) - Number(a.data.publishDate),
   );
-
-  const site_url =
-    process.env.PUBLIC_VERCEL_ENV === "production"
-      ? "https://jackhogan.me/"
-      : "https://staging.jackhogan.me/";
 
   return rss({
     xmlns: {
@@ -25,7 +21,7 @@ export const GET: APIRoute = async ({ site }) => {
     site: site!,
     customData:
       `<lastBuildDate>${sorted_posts[0]!.data.publishDate.toUTCString()}</lastBuildDate>` +
-      `<atom:link href="${site_url}rss.xml" rel="self" type="application/rss+xml"/>` +
+      `<atom:link href="${SITE_URL}rss.xml" rel="self" type="application/rss+xml"/>` +
       `<pubDate>${sorted_posts[0]!.data.publishDate.toUTCString()}</pubDate>`,
     items: sorted_posts.map((post) => ({
       ...post.data,
