@@ -158,13 +158,6 @@
   // Render loop
   let lastFrameTime = 0;
   function render(dt: DOMHighResTimeStamp) {
-    // if (!rootContent) {
-    //   throw new Error("No root content!");
-    // }
-    // const scrollWidth = rootContent.scrollWidth ?? 0;
-    // const scrollHeight = rootContent.scrollHeight ?? 0;
-    // canvas.width = Math.max(scrollWidth, window.innerWidth) - 1;
-    // canvas.height = Math.max(scrollHeight, window.innerHeight) - 1;
     const delta = (dt - lastFrameTime) * 5e-3; // Calculate time delta
     lastFrameTime = dt; // Update the last frame time
 
@@ -201,11 +194,6 @@
 </script>
 
 <style>
-  body {
-    margin: 0;
-    /* overflow: hidden; */
-    /* background-color: black; */
-  }
   #dotCanvas {
     position: absolute;
     top: 0;
