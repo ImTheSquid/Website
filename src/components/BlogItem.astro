@@ -22,7 +22,9 @@ const { title, publishDate, lastUpdatedDate, tags, description, href } =
     <FormattedDate date={publishDate} />
     •
     <span class="whitespace-nowrap font-mono"
-      >{tags.map((t) => <BlogTag tag={t} />)}</span
+      >{
+        tags.map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)
+      }</span
     >
   </h3>
   <p class="font-serif md:text-lg">

@@ -2,7 +2,66 @@
 title: Eradicate
 description: The transition to my new website, removing pretty much everything that came before.
 publishDate: 2024-12-25
-tags: [web]
+tags: [web, programming]
 ---
 
-hello test
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur gravida non sem ac commodo. Quisque tempor finibus pulvinar. Morbi accumsan orci libero, vel convallis leo scelerisque quis. Aliquam blandit nibh quis nisi laoreet, non condimentum elit bibendum. Fusce tristique est non urna condimentum venenatis. Maecenas a neque sagittis, tincidunt arcu id, mattis nunc. Vivamus ac elit sed magna cursus dapibus.
+
+Integer laoreet dolor a orci congue, eu scelerisque nisl elementum. Integer quis ultrices metus. Cras cursus leo quis bibendum efficitur. Suspendisse et libero ipsum. Morbi eu suscipit risus. Praesent quam nisl, pretium ac diam sit amet, rhoncus tempus lectus. Quisque ipsum ex, tempus vel fermentum a, rutrum eget felis. Pellentesque tortor velit, ultricies ac massa vitae, mattis aliquet neque. In ligula diam, rutrum in rutrum sed, accumsan at sapien. In rhoncus, dui sed facilisis sodales, arcu justo rhoncus nunc, quis semper enim ipsum a metus. Proin elementum metus ac quam egestas, pulvinar interdum leo condimentum. Sed faucibus felis at ex rutrum pretium. Ut pellentesque quam eget risus scelerisque, quis fringilla nibh convallis.
+
+Nullam aliquam aliquet tincidunt. Sed felis elit, iaculis quis consectetur bibendum, condimentum rhoncus erat. Phasellus vestibulum bibendum arcu, id feugiat nisl ullamcorper at. Vivamus odio massa, vehicula in ante et, egestas maximus dui. Nam molestie laoreet justo ut hendrerit. Donec consequat facilisis blandit. Nulla facilisi. Donec et velit tempor turpis euismod tincidunt. Pellentesque laoreet turpis nunc, et scelerisque ante tincidunt ac. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque in suscipit felis, a convallis leo.
+
+Vivamus ultrices ex libero, ut blandit ex cursus vitae. In non mauris sit amet mauris aliquet mollis in vitae ex. Aenean non volutpat nulla. Sed sollicitudin risus quis quam bibendum, at pharetra libero lobortis. Vivamus rhoncus faucibus ornare. Fusce nec facilisis justo, eget dapibus ex. Nullam sed ipsum lacus. Aenean at eros eget lacus molestie euismod sit amet a arcu. Mauris eu ligula sed est finibus volutpat vel a ipsum.
+
+Ut in risus et est cursus viverra. Curabitur pellentesque a justo vitae rutrum. Donec ultricies sollicitudin suscipit. Vivamus quis rutrum elit, eu efficitur nunc. Duis condimentum erat id erat imperdiet iaculis. Morbi rutrum fermentum lorem, a placerat mauris euismod nec. Praesent pretium et nisl ut feugiat. Aliquam cursus dui eu vestibulum dignissim. Suspendisse sollicitudin pellentesque imperdiet. Phasellus eu augue eleifend, laoreet nisl euismod, vestibulum nulla.
+
+```svelte
+<script lang="ts">
+  const { path }: { path: string } = $props();
+
+  interface Page {
+    name: string;
+    route: string;
+    match?: string;
+  }
+
+  const pages: Page[] = [
+    { name: "Me", route: "/" },
+    { name: "Work", route: "/work" },
+    { name: "Blog", route: "/blog", match: "/blog(/tag:.+)?" },
+  ];
+</script>
+
+<span class="flex flex-row text-2xl mb-5">
+  {#each pages as { name, route, match }, i}
+    {#if !path.match(`^${match || route}/?$`)}
+      <a href={route} class="hover:underline">{name}</a>
+    {:else}
+      <p class="font-bold">{name}</p>
+    {/if}
+    {#if i < pages.length - 1}
+      <p class="mx-3 font-bold">/</p>
+    {/if}
+  {/each}
+</span>
+```
+
+The Sign is a meter-tall [Conway glider](https://en.wikipedia.org/wiki/Glider_(Conway%27s_Game_of_Life)) (which is the Purdue Hackers logo), whose blocks light up according to the [color representation of the current time](https://blog.purduehackers.com/posts/lightning-time). The Sign shines out from the windows of our makerspace, the Bechtel Center, every Friday night, telling the world when Hack Night is happening. It’s  the physical embodiment of the spirit of Purdue Hackers: make something amazing with help from your friends and show it to the world.
+
+The Sign is made of PLA, wood, metal, acrylic, and silicon. It took a year and a half to build and is the fruit of the effort of around ten people. It may look relatively simple, but there is a world of complexity hidden beneath the acrylic paneling and shining LEDs.
+
+# I: Spark
+
+## April 2023: Hack Nights 2.6 & 2.7
+
+### Blah bah
+
+It all started near the end of April 2023 at Hack Night 2.6. A group of Hack Night attendees got together and started brainstorming cool hardware projects that we could pursue. A bunch of cool ideas came out of that session, including a flag, an update to Lightning Time, and other fun projects. The big project of the night, though, was a massive sign of our logo. We envisioned a shining monument to Purdue Hackers, with massive LED panels that we could stick in the window of our venue to show the world that Hack Night was happening.
+
+---
+
+- A
+- B
+- V
+
+> blah blah blah

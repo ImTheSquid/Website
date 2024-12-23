@@ -14,4 +14,13 @@ export default defineConfig({
   integrations: [mdx(), tailwind(), svelte()],
   adapter: vercel(),
   site: "https://jackhogan.me",
+  markdown: {
+    shikiConfig: {
+      theme: "github-dark",
+      themes: {
+        light: "github-light",
+        dark: "github-dark",
+      },
+    },
+  },
 });

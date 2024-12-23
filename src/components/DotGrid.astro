@@ -104,8 +104,8 @@
   const uRadius = gl.getUniformLocation(program, "u_radius");
   const uDark = gl.getUniformLocation(program, "u_dark");
 
-  let mouseX = canvas.width / 2;
-  let mouseY = canvas.height / 2;
+  let mouseX = -1000;
+  let mouseY = -1000;
 
   const MOUSE_RADIUS = 150;
 
@@ -131,7 +131,6 @@
   document.addEventListener("dotenter", (e) => {
     const { detail } = e as CustomEvent;
     const elem = detail as Element;
-    console.log("ENTER");
     currentBox = elem;
   });
 

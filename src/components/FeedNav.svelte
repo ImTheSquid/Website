@@ -4,19 +4,20 @@
   interface Page {
     name: string;
     route: string;
+    match?: string;
   }
 
   const pages: Page[] = [
     { name: "Me", route: "/" },
     { name: "Work", route: "/work" },
-    { name: "Blog", route: "/blog" },
+    { name: "Blog", route: "/blog", match: "/blog(/tag:.+)?" },
   ];
 </script>
 
 <span class="flex flex-row text-2xl mb-5">
-  {#each pages as { name, route }, i}
-    {#if !path.match(`^${route}/?$`)}
-        <a href={route} class="hover:underline">{name}</a>
+  {#each pages as { name, route, match }, i}
+    {#if !path.match(`^${match || route}/?$`)}
+      <a href={route} class="hover:underline">{name}</a>
     {:else}
       <p class="font-bold">{name}</p>
     {/if}

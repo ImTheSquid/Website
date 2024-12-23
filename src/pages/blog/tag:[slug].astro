@@ -1,0 +1,28 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import BlogList from "../../components/BlogList.astro";
+export const getStaticPaths = (async () => {
+  const entities = await getCollection("blog");
+  const uniqueTags: Set<string> = new Set();
+  for (const entity of entities) {
+    for (const tag of entity.data.tags) {
+      uniqueTags.add(tag);
+    }
+  }
+
+  return Array.from(uniqueTags).map((v) => ({
+    params: {
+      slug: v,
+    },
+    props: { tag: v },
+  }));
+}) satisfies GetStaticPaths;
+
+const { tag } = Astro.props;
+---
+
+<Layout>
+  <BlogList tagFilter={tag} />
+</Layout>
