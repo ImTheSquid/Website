@@ -1,65 +1,97 @@
-<canvas id="dotCanvas" transition:persist></canvas>
+<div id="canvas-container"></div>
 
 <script>
   import { DotCanvas } from "@lib/dots";
-  let rootContent = document.getElementById("root-content");
-  const canvas = document.getElementById("dotCanvas") as HTMLCanvasElement;
-  let dots = new DotCanvas(canvas);
 
-  function calcCanvas() {
+  const canvasContainer = document.getElementById(
+    "canvas-container",
+  ) as HTMLDivElement;
+  let rootContent = document.getElementById("root-content");
+
+  const maxCanvasHeight = 4080; // Example limit, adjust based on your GPU.
+  const canvases: HTMLCanvasElement[] = [];
+  let dotsInstances: DotCanvas[] = [];
+
+  function createCanvas() {
+    const canvas = document.createElement("canvas");
+    canvas.style.position = "absolute";
+    canvas.style.left = "0";
+    canvas.style.pointerEvents = "none";
+    canvas.style.filter = "blur(7px)";
+    canvasContainer.appendChild(canvas);
+    return canvas;
+  }
+
+  function updateCanvases() {
     rootContent = document.getElementById("root-content");
     if (!rootContent) {
       throw new Error("No root content!");
     }
-    const scrollWidth = rootContent.scrollWidth ?? 0;
-    const scrollHeight = rootContent.scrollHeight ?? 0;
-    canvas.width = Math.max(scrollWidth, window.innerWidth) - 1;
-    canvas.height = Math.max(scrollHeight, window.innerHeight) - 1;
+
+    const totalHeight = Math.max(rootContent.scrollHeight, window.innerHeight);
+    const totalWidth = Math.max(rootContent.scrollWidth, window.innerWidth) - 1;
+
+    // Update container height
+    canvasContainer.style.height = `${totalHeight}px`;
+
+    // Determine the number of canvases needed
+    const canvasCount = Math.ceil(totalHeight / maxCanvasHeight);
+
+    // Adjust existing canvases or create new ones
+    while (canvases.length < canvasCount) {
+      const canvas = createCanvas();
+      canvases.push(canvas);
+      dotsInstances.push(new DotCanvas(canvas));
+    }
+
+    while (canvases.length > canvasCount) {
+      const canvas = canvases.pop();
+      if (canvas) {
+        canvasContainer.removeChild(canvas);
+      }
+      dotsInstances.pop();
+    }
+
+    // Update canvas dimensions and positions
+    canvases.forEach((canvas, index) => {
+      canvas.width = totalWidth;
+      canvas.height = Math.min(
+        maxCanvasHeight,
+        totalHeight - index * maxCanvasHeight,
+      );
+      canvas.style.top = `${index * maxCanvasHeight}px`;
+    });
+
+    // Regenerate dots for all canvases
+    dotsInstances.forEach((dots) => {
+      dots.generateDots();
+    });
   }
 
-  calcCanvas();
+  updateCanvases();
 
   let mouseX = -1000;
   let mouseY = -1000;
 
-  // Update mouse position
   document.addEventListener("mousemove", (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
   });
 
   window.addEventListener("resize", () => {
-    calcCanvas();
-    dots.generateDots();
-  });
-
-  document.addEventListener("astro:page-load", () => {
-    dots = new DotCanvas(
-      document.getElementById("dotCanvas") as HTMLCanvasElement,
-    );
-    calcCanvas();
-    dots.generateDots();
+    updateCanvases();
   });
 
   let currentBox: Element | null = null;
-
   document.addEventListener("dotenter", (e) => {
-    const { detail } = e as CustomEvent;
-    const elem = detail as Element;
-    currentBox = elem;
+    currentBox = (e as CustomEvent).detail;
   });
-
   document.addEventListener("dotleave", (e) => {
-    const { detail } = e as CustomEvent;
-    const elem = detail as Element;
-    if (elem === currentBox) {
-      currentBox = null;
-    }
+    const elem = (e as CustomEvent).detail;
+    if (elem === currentBox) currentBox = null;
   });
 
-  let isDarkMode =
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches;
+  let isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
   window
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", (event) => {
@@ -69,24 +101,32 @@
   // Render loop
   let lastFrameTime = 0;
   function render(dt: DOMHighResTimeStamp) {
-    const delta = (dt - lastFrameTime) * 5e-3; // Calculate time delta
-    lastFrameTime = dt; // Update the last frame time
+    const delta = (dt - lastFrameTime) * 5e-3;
+    lastFrameTime = dt;
 
-    dots.render({
-      box:
-        currentBox !== null
+    dotsInstances.forEach((dots, index) => {
+      const offsetY = index * maxCanvasHeight;
+
+      dots.render({
+        box: currentBox
           ? {
-              top: currentBox.getBoundingClientRect().top + window.scrollY,
+              top:
+                currentBox.getBoundingClientRect().top +
+                window.scrollY -
+                offsetY,
               bottom:
-                currentBox.getBoundingClientRect().bottom + window.scrollY,
+                currentBox.getBoundingClientRect().bottom +
+                window.scrollY -
+                offsetY,
               left: currentBox.getBoundingClientRect().left + window.scrollX,
               right: currentBox.getBoundingClientRect().right + window.scrollX,
             }
           : null,
-      isDarkMode,
-      delta,
-      mouseX: mouseX + window.scrollX,
-      mouseY: mouseY + window.scrollY,
+        isDarkMode,
+        delta,
+        mouseX: mouseX + window.scrollX,
+        mouseY: mouseY + window.scrollY - offsetY,
+      });
     });
 
     requestAnimationFrame(render);
@@ -95,13 +135,13 @@
 </script>
 
 <style>
-  #dotCanvas {
+  #canvas-container {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
     z-index: -1;
-    pointer-events: none;
-    filter: blur(7px);
     overflow: hidden;
   }
 </style>

@@ -5,13 +5,21 @@ publishDate: 2024-12-25
 tags: [web, programming]
 ---
 
-One day in my sophomore year at Purdue, I realized I had made a critical mistake: I had been programming for over a decade up to that point, yet I still didn’t have a website! At the time I didn’t really have much of a brand, so I decided to just throw something together pretty randomly. I looked at one or two sites for inspiration, made a few tiny design tweaks, then settled on a sketch:
+import Figure from "@components/content/Figure.astro";
 
-[SKETCH HERE]
+One day during my sophomore year at Purdue I realized I had made a critical mistake: I had been programming for over a decade up to that point, yet I still didn’t have a website! At the time I didn’t really have much of a brand, so I decided to just throw something together pretty randomly. I looked at one or two sites for inspiration, made a few tiny design tweaks, then settled on a sketch:
 
-That turned into this within the span of a few hours:
+<Figure caption="Sketches for my first site.">
+    ![The hero page sketch for my first site.](/blog/eradicate/oldSiteSketch.png)
+    ![The projects page sketch for my first site.](/blog/eradicate/oldSiteSketch2.png)
+</Figure>
 
-[SS OF OLD SITE]
+I turned those sketches into this within the span of a few hours:
+
+<Figure caption="My first site in all its glory.">
+    ![The hero page for my first site.](/blog/eradicate/oldSite.png)
+    ![The projects page for my first site.](/blog/eradicate/oldSite2.png)
+</Figure>
 
 I was proud of myself for making this site, and not without reason. It was my first significant foray into HTML and Svelte that had ended in a real site people could visit. However, I spent very little time doing any verification for responsiveness and basic features such as dark mode, a web standard by that point, were missing for months. Eventually I got around to fixing the most glaring issues (although I never really fixed the mobile experience), but as I fixed more and more problems, I realized I liked my site less and less.
 
@@ -27,7 +35,9 @@ I resolved a few weeks ago to start working on a new site over winter break. How
 
 As shown above, the first thing I like to do when designing any user interface is to sketch it out on my iPad. I started with a basic sketch and came up with my first flare idea, or what would make my website stand out:
 
-[NOTES APP SS]
+<Figure caption="The sketch for my new site.">
+    ![A sketch of my new site.](/blog/eradicate/newSiteSketch.png)
+</Figure>
 
 The big concepts to pay attention to here are the two columns, the general size of the text, and the navigation system at the top. These would form the scaffolding of my site and would remain largely unchanged throughout my development process. My flare idea was to create a hover effect where mousing over certain elements would cause little 90° corner edges to expand out from the element’s border, changing ever so slightly in position to follow the mouse. It would’ve looked something like a parallax effect.
 
@@ -108,7 +118,9 @@ My first attempt boiled down to the following code:
 
 When I ran this code performance was less than optimal. I had a suspicion using an SVG was not the best way of doing it, which was confirmed when I got this message from my shader wizard friend Hazel:
 
-[HAZEL MSG]
+<Figure caption="Hazel's message to me.">
+    ![A Discord message that says: 💥 :new message: I think I found why your performance is so bad](/blog/eradicate/hazelMsg.png)
+</Figure>
 
 She soon told me what I dreaded hearing: I would need to learn WebGL.
 
@@ -153,7 +165,10 @@ After the big items were done I worked on some nice-to-haves my old site lacked.
 
 After all of that I had an amazing looking site and an even more amazing change in network traffic:
 
-[Show received bytes on old vs new site, literally 100x improvement]
+<Figure caption="The no-cache network traffic on my old versus my new site.">
+    ![The network traffic on my old site with a total size of 9,202.03 kB](/blog/eradicate/oldSiteNetwork.png)
+    ![The network traffic on my new site with a total size of 101.65 kB](/blog/eradicate/newSiteNetwork.png)
+</Figure>
 
 That’s right, I ship about **100 times less data** compared to my previous site. Who would’ve guessed that just one year of web development experience would lead to such a drastic improvement?
 
