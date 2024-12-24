@@ -134,13 +134,7 @@ export class DotCanvas {
 
     if (box) {
       const { left, right, top, bottom } = box;
-      this.gl.uniform4f(
-        uBox,
-        left,
-        bottom + window.scrollY,
-        right,
-        top + window.scrollY,
-      );
+      this.gl.uniform4f(uBox, left, bottom, right, top);
       this.boxBrightness = Math.min(this.boxBrightness + delta, 1.0);
     } else {
       this.boxBrightness = Math.max(this.boxBrightness - delta, 0.0);
