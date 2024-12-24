@@ -11,7 +11,7 @@ export default {
     },
     fontFamily: {
       sans: ["DM Sans", ...defaultTheme.fontFamily.sans],
-      serif: ["DM Serif Text", ...defaultTheme.fontFamily.serif],
+      serif: ["Lora", ...defaultTheme.fontFamily.serif],
       title: ["DM Serif Display", ...defaultTheme.fontFamily.serif],
       mono: ["DM Mono", ...defaultTheme.fontFamily.mono],
     },

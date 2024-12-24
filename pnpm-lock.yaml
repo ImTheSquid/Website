@@ -32,13 +32,13 @@ importers:
       '@fontsource-variable/dm-sans':
         specifier: ^5.1.0
         version: 5.1.0
+      '@fontsource-variable/lora':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@fontsource/dm-mono':
         specifier: ^5.1.0
         version: 5.1.0
       '@fontsource/dm-serif-display':
-        specifier: ^5.1.0
-        version: 5.1.0
-      '@fontsource/dm-serif-text':
         specifier: ^5.1.0
         version: 5.1.0
       '@types/react':
@@ -573,14 +573,14 @@ packages:
   '@fontsource-variable/dm-sans@5.1.0':
     resolution: {integrity: sha512-wPhOMY/3ipy0t5ZIQk7FTKd3uZqE1XP2Yd2oKe3HfMWCYkotbcoMLkBQXcZzf/SgdCdczSP/hiO/PAZb84Kbxw==}
 
+  '@fontsource-variable/lora@5.1.0':
+    resolution: {integrity: sha512-dYb/q3hMuabXDy3yHTtjIn+nzYIJ+jguULrPelHPBfGFlvwTI0HAETP+tZm/0aRISD7q2nWTK3tQA8GFZRDTmg==}
+
   '@fontsource/dm-mono@5.1.0':
     resolution: {integrity: sha512-cfowZUJJDHjgVFOEQmIn2KHtQ8LDXnTGgTTunUImzzg3Xf6V92MlYR/pmkqIt7lXq7lfP/pQZ9ph/9JeLDRsCQ==}
 
   '@fontsource/dm-serif-display@5.1.0':
     resolution: {integrity: sha512-8IGBpTOn2XRA09plE6iAlZajL09iwCdSTd60FiM9NsD7VV4Nqseo9tgqiZLyuLC9D1jht5i39I2IYI/o2+Q0Kg==}
-
-  '@fontsource/dm-serif-text@5.1.0':
-    resolution: {integrity: sha512-tjeMxXJrzYBJZQ26oI86CG7/tvk7jdgP42a2Vl5/4J0SxcPThnepPkWU3tBmkpohEZH8w7fAKUKuJ4pt89+qIg==}
 
   '@iconify/tools@4.1.1':
     resolution: {integrity: sha512-Hybu/HGhv6T8nLQhiG9rKx+ekF7NNpPOEQAy7JRSKht3s3dcFSsPccYzk24Znc9MTxrR6Gak3cg6CPP5dyvS2Q==}
@@ -3642,11 +3642,11 @@ snapshots:
 
   '@fontsource-variable/dm-sans@5.1.0': {}
 
+  '@fontsource-variable/lora@5.1.0': {}
+
   '@fontsource/dm-mono@5.1.0': {}
 
   '@fontsource/dm-serif-display@5.1.0': {}
-
-  '@fontsource/dm-serif-text@5.1.0': {}
 
   '@iconify/tools@4.1.1':
     dependencies:
