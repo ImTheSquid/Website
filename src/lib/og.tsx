@@ -12,7 +12,7 @@ interface Props {
 export function getOgImage({ size = "small", subtitle, title }: Props) {
   const html = (
     <div
-      tw="flex flex-col justify-end items-start w-[1200px] h-[630px] bg-cover bg-center p-6"
+      tw="flex flex-col justify-end items-start w-[1200px] h-[630px] p-6"
       style={{ backgroundImage: `url(${ogBase})` }}
     >
       <h1 tw={`text-${size === "big" ? "9" : "8"}xl font-bold mb-2`}>

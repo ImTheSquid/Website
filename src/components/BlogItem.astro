@@ -19,7 +19,7 @@ const { title, publishDate, lastUpdatedDate, tags, description, href } =
     <a class="underline hover:decoration-4" href={href}>{title}</a>
   </h2>
   <h3 class="font-sans italic text-xl md:text-2xl break-words">
-    <FormattedDate date={publishDate} />
+    <FormattedDate date={publishDate} monthFormat="short" />
     •
     <span class="whitespace-nowrap font-mono"
       >{
