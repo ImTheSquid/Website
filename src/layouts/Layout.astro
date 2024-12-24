@@ -159,7 +159,6 @@ const animation: TransitionDirectionalAnimations = {
   let blogTagStack: string[] = [];
 
   document.addEventListener("astro:before-preparation", (ev) => {
-    console.log(ev);
     const fPath = ev.from.pathname;
     const tPath = ev.to.pathname;
     if (fPath === tPath) {
