@@ -10,15 +10,15 @@ import Figure from "@components/content/Figure.astro";
 One day during my sophomore year at Purdue I realized I had made a critical mistake: I had been programming for over a decade up to that point, yet I still didn’t have a website! At the time I didn’t really have much of a brand, so I decided to just throw something together pretty randomly. I looked at one or two sites for inspiration, made a few tiny design tweaks, then settled on a sketch:
 
 <Figure caption="Sketches for my first site.">
-    ![The hero page sketch for my first site.](/blog/eradicate/oldSiteSketch.png)
-    ![The projects page sketch for my first site.](/blog/eradicate/oldSiteSketch2.png)
+    ![The hero page sketch for my first site.](/blog/eradicate/oldSiteSketch.webp)
+    ![The projects page sketch for my first site.](/blog/eradicate/oldSiteSketch2.webp)
 </Figure>
 
 I turned those sketches into this within the span of a few hours:
 
 <Figure caption="My first site in all its glory.">
-    ![The hero page for my first site.](/blog/eradicate/oldSite.png)
-    ![The projects page for my first site.](/blog/eradicate/oldSite2.png)
+    ![The hero page for my first site.](/blog/eradicate/oldSite.webp)
+    ![The projects page for my first site.](/blog/eradicate/oldSite2.webp)
 </Figure>
 
 I was proud of myself for making this site, and not without reason. It was my first significant foray into HTML and Svelte that had ended in a real site people could visit. However, I spent very little time doing any verification for responsiveness and basic features such as dark mode, a web standard by that point, were missing for months. Eventually I got around to fixing the most glaring issues (although I never really fixed the mobile experience), but as I fixed more and more problems, I realized I liked my site less and less.
@@ -36,7 +36,7 @@ I resolved a few weeks ago to start working on a new site over winter break. How
 As shown above, the first thing I like to do when designing any user interface is to sketch it out on my iPad. I started with a basic sketch and came up with my first flare idea, or what would make my website stand out:
 
 <Figure caption="The sketch for my new site.">
-    ![A sketch of my new site.](/blog/eradicate/newSiteSketch.png)
+    ![A sketch of my new site.](/blog/eradicate/newSiteSketch.webp)
 </Figure>
 
 The big concepts to pay attention to here are the two columns, the general size of the text, and the navigation system at the top. These would form the scaffolding of my site and would remain largely unchanged throughout my development process. My flare idea was to create a hover effect where mousing over certain elements would cause little 90° corner edges to expand out from the element’s border, changing ever so slightly in position to follow the mouse. It would’ve looked something like a parallax effect.
@@ -119,7 +119,7 @@ My first attempt boiled down to the following code:
 When I ran this code performance was less than optimal. I had a suspicion using an SVG was not the best way of doing it, which was confirmed when I got this message from my shader wizard friend Hazel:
 
 <Figure caption="Hazel's message to me.">
-    ![A Discord message that says: 💥 :new message: I think I found why your performance is so bad](/blog/eradicate/hazelMsg.png)
+    ![A Discord message that says: 💥 :new message: I think I found why your performance is so bad](/blog/eradicate/hazelMsg.webp)
 </Figure>
 
 She soon told me what I dreaded hearing: I would need to learn WebGL.
@@ -132,7 +132,9 @@ The first issue I had to solve was the color space. I had defined my theme color
 
 After dealing with that I was able to complete the mouse-based effect. Now the dot size and color tracked the mouse cursor!
 
-[MOUSE TRACKING GIF]
+<Figure caption="Mouse tracking with the dot grid.">
+    ![A mouse moving over a background grid of black dots with the dots getting bigger and brighter as the mouse gets closer.](/blog/eradicate/mouse.gif)
+</Figure>
 
 I was happy with this, but it didn’t fully recreate the original flare’s interaction with elements, for example blog post links. By this point my design language had evolved past cards, but I still wanted to include something similar. In the end I went with a system where all of the dots behind an element could light up and grow a bit bigger. However, I had reached the end of ChatGPT’s knowledge and would have to continue mostly on my own.
 
@@ -147,7 +149,9 @@ float pointIsInBox(vec2 point, vec4 box) {
 
 This worked quite well, and while I had to write some ugly expressions to mesh everything together, it worked! Now when hovering over any block with the class `dot-control` the dots behind it would animate to about 75% brightness compared to the mouse! This made the effect visible while still putting priority on the mouse.
 
-[BOX TRACKING GIF]
+<Figure caption="The box highlighting system in action.">
+    ![The card for this blog post on my main blog site with all of the dots behind it lighting up when I mouse over it.](/blog/eradicate/box.gif)
+</Figure>
 
 # Filling In the Blanks
 
@@ -166,8 +170,8 @@ After the big items were done I worked on some nice-to-haves my old site lacked.
 After all of that I had an amazing looking site and an even more amazing change in network traffic:
 
 <Figure caption="The no-cache network traffic on my old versus my new site.">
-    ![The network traffic on my old site with a total size of 9,202.03 kB](/blog/eradicate/oldSiteNetwork.png)
-    ![The network traffic on my new site with a total size of 101.65 kB](/blog/eradicate/newSiteNetwork.png)
+    ![The network traffic on my old site with a total size of 9,202.03 kB](/blog/eradicate/oldSiteNetwork.webp)
+    ![The network traffic on my new site with a total size of 101.65 kB](/blog/eradicate/newSiteNetwork.webp)
 </Figure>
 
 That’s right, I ship about **100 times less data** compared to my previous site. Who would’ve guessed that just one year of web development experience would lead to such a drastic improvement?
