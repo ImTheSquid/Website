@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+import FeedContainer from "./FeedContainer.astro";
+import BlogItem from "./BlogItem.astro";
+
+interface Props {
+  tagFilter?: string;
+}
+
+const entries = await getCollection("blog");
+const { tagFilter } = Astro.props;
+---
+<FeedContainer>
+    {
+      entries
+        .filter(e => !tagFilter || e.data.tags.includes(tagFilter))
+        .sort(
+          (a, b) => a.data.publishDate.valueOf() - b.data.publishDate.valueOf(),
+        )
+        .map((post) => (
+          <BlogItem
+            title={post.data.title}
+            description={post.data.description}
+            publishDate={post.data.publishDate}
+            lastUpdatedDate={post.data.lastUpdateDate}
+            tags={post.data.tags}
+            href=`/blog/${post.slug}`
+          />
+        ))
+    }
+  </FeedContainer>

@@ -1,0 +1,16 @@
+---
+interface Props {
+  tag: string;
+  comma: boolean;
+}
+
+const { tag, comma } = Astro.props;
+---
+
+<span
+  ><a
+    href=`/blog/tag:${tag}`
+    class="underline hover:decoration-2"
+    data-astro-reload>{tag}</a
+  >{comma ? ", " : ""}</span
+>

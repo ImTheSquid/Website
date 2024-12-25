@@ -1,0 +1,98 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import BlogLayout from "@layouts/BlogLayout.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import BlogTag from "@components/BlogTag.astro";
+import Icon from "astro-iconify";
+import Link from "@components/content/Link.astro";
+import UnorderedList from "@components/content/UnorderedList.astro";
+import OrderedList from "@components/content/OrderedList.astro";
+import H1 from "@components/content/H1.astro";
+import H2 from "@components/content/H2.astro";
+import H3 from "@components/content/H3.astro";
+import Hr from "@components/content/Hr.astro";
+import Image from "@components/content/Image.astro";
+import Blockquote from "@components/content/Blockquote.astro";
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("blog");
+
+  return entries.map((e) => ({ params: { slug: e.slug }, props: { ...e } }));
+}) satisfies GetStaticPaths;
+
+const {
+  data: { title, publishDate, tags, lastUpdateDate },
+  render,
+} = Astro.props;
+
+const { Content } = await render();
+---
+
+<BlogLayout entry={Astro.props}>
+  <div class="mt-10">
+    <a href="/blog"
+      ><Icon
+        name="ri:arrow-left-line"
+        width={40}
+        class="hover:text-theme hover:-translate-x-1 ease-linear transition-all"
+      /></a
+    >
+    <h1 class="font-title text-7xl">{title}</h1>
+    <h2 class="font-sans text-2xl">
+      <FormattedDate date={publishDate} />
+    </h2>
+    {
+      lastUpdateDate ? (
+        <h3 class="font-sans text-xl">
+          Updated <FormattedDate date={lastUpdateDate} />
+        </h3>
+      ) : (
+        ""
+      )
+    }
+    <h4 class="text-lg font-sans">
+      Tags: <span class="font-mono"
+        >{
+          tags.map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)
+        }</span
+      >
+    </h4>
+  </div>
+  <div
+    class="mt-8 sm:mt-12 mb-8 sm:mb-12 text-lg font-serif flex flex-col items-start gap-y-4 justify-center"
+  >
+    <Content
+      components={{
+        a: Link,
+        ul: UnorderedList,
+        ol: OrderedList,
+        h1: H1,
+        h2: H2,
+        h3: H3,
+        hr: Hr,
+        img: Image,
+        blockquote: Blockquote,
+      }}
+    />
+  </div>
+</BlogLayout>
+
+<style is:global>
+  .astro-code {
+    width: 100%;
+    @apply p-2 rounded-md;
+    max-height: 80vh;
+  }
+  @media (prefers-color-scheme: dark) {
+    .astro-code,
+    .astro-code span {
+      color: var(--shiki-dark) !important;
+      background-color: var(--shiki-dark-bg) !important;
+      /* Optional, if you also want font styles */
+      font-style: var(--shiki-dark-font-style) !important;
+      font-weight: var(--shiki-dark-font-weight) !important;
+      text-decoration: var(--shiki-dark-text-decoration) !important;
+    }
+  }
+</style>

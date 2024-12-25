@@ -1,0 +1,33 @@
+---
+import BlogTag from "./BlogTag.astro";
+import FormattedDate from "./FormattedDate.astro";
+interface Props {
+  title: string;
+  publishDate: Date;
+  lastUpdatedDate?: Date;
+  tags: string[];
+  description: string;
+  href: string;
+}
+
+const { title, publishDate, lastUpdatedDate, tags, description, href } =
+  Astro.props;
+---
+
+<div class="dot-control pb-10">
+  <h2 class="font-title text-3xl md:text-4xl">
+    <a class="underline hover:decoration-4" href={href}>{title}</a>
+  </h2>
+  <h3 class="font-sans italic text-xl md:text-2xl break-words">
+    <FormattedDate date={publishDate} monthFormat="short" />
+    •
+    <span class="whitespace-nowrap font-mono"
+      >{
+        tags.map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)
+      }</span
+    >
+  </h3>
+  <p class="font-serif md:text-lg">
+    {description}
+  </p>
+</div>

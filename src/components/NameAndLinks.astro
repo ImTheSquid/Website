@@ -1,0 +1,42 @@
+---
+import { Icon } from "astro-iconify";
+import IconLink from "./IconLink.astro";
+import Footer from "./Footer.astro";
+import { TAGLINE } from "@lib/consts";
+
+interface Props {
+  hide: boolean;
+}
+
+const { hide } = Astro.props;
+const adaptation = hide
+  ? "hidden md:block md:opacity-0"
+  : "md:h-screen md:fixed md:top-0 md:py-4";
+---
+
+<section class=`flex flex-col md:pr-10 ${adaptation}`>
+  <div class="md:flex-grow mb-10">
+    <h1 class="font-title text-7xl pb-4">Jack<br />Hogan</h1>
+    <h3 class="text-2xl font-sans">{TAGLINE}</h3>
+    <div class="flex flex-row mt-2">
+      <IconLink
+        name="ri:file-user-line"
+        href="https://raw.githubusercontent.com/ImTheSquid/Resume/master/JackHoganResume.pdf"
+      />
+      <IconLink name="ri:mail-line" href="mailto:jackhogan11@gmail.com" />
+      <IconLink
+        name="ri:bluesky-fill"
+        href="https://bsky.app/profile/jackhogan.me"
+      />
+      <IconLink name="ri:github-fill" href="https://github.com/ImTheSquid" />
+      <IconLink
+        name="ri:linkedin-box-fill"
+        href="https://www.linkedin.com/in/jackhogan11/"
+      />
+      <IconLink name="ri:rss-fill" href="/rss.xml" />
+    </div>
+  </div>
+  <div class="hidden md:block">
+    <Footer />
+  </div>
+</section>

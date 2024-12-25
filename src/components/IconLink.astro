@@ -1,0 +1,18 @@
+---
+import { Icon } from "astro-iconify";
+
+interface Props {
+  name: string;
+  href: string;
+}
+
+const { name, href } = Astro.props;
+---
+
+<a href={href} target="_blank" class="mr-2">
+  <Icon
+    name={name}
+    width={40}
+    class="hover:text-theme hover:scale-110 ease-linear transition-all"
+  />
+</a>
