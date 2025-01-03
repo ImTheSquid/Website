@@ -18,7 +18,11 @@ import react from "@astrojs/react";
 // https://astro.build/config
 export default defineConfig({
   integrations: [mdx(), tailwind(), svelte(), react()],
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
   site: "https://jackhogan.me",
   markdown: {
     shikiConfig: {
