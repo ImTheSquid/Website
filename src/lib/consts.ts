@@ -1,4 +1,4 @@
-export const TAGLINE = "Developer • Entrepreneur • Leader";
+export const TAGLINE = "Researcher • Entrepreneur • Leader";
 export const OG_TITLE = "Jack Hogan";
 export const OG_DESCRIPTION =
   "Working to create concise, creative solutions to the problems the world faces and having fun while doing so.";
