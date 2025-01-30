@@ -3,6 +3,7 @@ interface Props {
   alwaysCenter?: boolean;
 }
 const { alwaysCenter = false } = Astro.props;
+const year = new Date().getFullYear();
 ---
 
 <footer class="mt-4 w-full">
@@ -28,6 +29,6 @@ const { alwaysCenter = false } = Astro.props;
   <p
     class=`font-sans mt-2 text-lg text-center ${alwaysCenter ? "" : "md:text-start"} mb-10 md:mb-0`
   >
-    © Jack Hogan
+    © {year} Jack Hogan
   </p>
 </footer>
