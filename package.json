@@ -34,6 +34,7 @@
   },
   "packageManager": "pnpm@9.1.0+sha1.217063ce3fcbf44f3051666f38b810f1ddefee4a",
   "devDependencies": {
+    "@svelte-put/qr": "^2.1.0",
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-svelte": "^3.3.2",
