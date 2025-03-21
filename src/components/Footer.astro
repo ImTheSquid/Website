@@ -1,12 +1,25 @@
 ---
 interface Props {
   alwaysCenter?: boolean;
+  isBlog?: boolean;
 }
-const { alwaysCenter = false } = Astro.props;
+const { alwaysCenter = false, isBlog = false } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
 <footer class="mt-4 w-full">
+  {
+    isBlog && (
+      <div class="justify-center flex mb-2">
+        <button
+          class="hover:underline p-1 hover:-translate-y-1 transition-transform"
+          onclick="window.scrollTo({top: 0, behavior: 'smooth'});"
+        >
+          ↑ Back to Top ↑
+        </button>
+      </div>
+    )
+  }
   <div
     class=`flex flex-row text-lg font-sans justify-center ${alwaysCenter ? "" : "md:justify-normal"}`
   >
