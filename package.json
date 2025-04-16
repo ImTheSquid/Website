@@ -20,6 +20,7 @@
     "@fontsource-variable/lora": "^5.2.5",
     "@fontsource/dm-mono": "^5.2.5",
     "@fontsource/dm-serif-display": "^5.2.5",
+    "@purduehackers/time": "^0.7.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vercel/og": "^0.6.5",
