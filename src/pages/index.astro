@@ -1,13 +1,17 @@
 ---
+import headshotSrc from "@assets/headshot.webp";
+import { Picture } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
 ---
 
 <Layout>
   <div class="relative">
-    <img
-      src="/headshot.webp"
-      alt="Me standing on a beach in Ireland during sunset"
-      class="rounded-md float-right ml-4 mb-4 w-1/2 md:w-1/3"
+      <Picture
+        class="rounded-md float-right ml-4 mb-4 w-1/2 md:w-1/3"
+        src={headshotSrc}
+        formats={["avif", "webp"]}
+        alt="Me standing on a beach in Ireland during sunset"
+        loading="eager"
     />
     <h2 class="text-3xl md:text-4xl font-title">Hi, I&apos;m Jack!</h2>
     <p class="md:text-lg font-serif">
