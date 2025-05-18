@@ -14,6 +14,7 @@ import H3 from "@components/content/H3.astro";
 import Hr from "@components/content/Hr.astro";
 import Image from "@components/content/Image.astro";
 import Blockquote from "@components/content/Blockquote.astro";
+import TableOfContents from "@components/TableOfContents.svelte";
 
 export const getStaticPaths = (async () => {
   const entries = await getCollection("blog");
@@ -26,7 +27,7 @@ const {
   render,
 } = Astro.props;
 
-const { Content } = await render();
+const { Content, headings } = await render();
 ---
 
 <BlogLayout entry={Astro.props}>
@@ -51,13 +52,24 @@ const { Content } = await render();
         ""
       )
     }
-    <h4 class="text-lg font-sans">
+    <h4 class="text-lg font-sans mb-4">
       Tags: <span class="font-mono"
         >{
           tags.map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)
         }</span
       >
     </h4>
+
+    {
+      headings.length > 0 ? (
+        <TableOfContents
+          headings={headings.filter((h) => h.depth <= 3)}
+          client:load
+        />
+      ) : (
+        ""
+      )
+    }
   </div>
   <div
     class="mt-8 sm:mt-12 mb-8 sm:mb-12 text-lg font-serif flex flex-col items-start gap-y-4 justify-center"
