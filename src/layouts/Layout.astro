@@ -156,8 +156,6 @@ const animation: TransitionDirectionalAnimations = {
 <script>
   import { dotHighlight } from "../lib/events";
 
-  let blogTagStack: string[] = [];
-
   document.addEventListener("astro:before-preparation", (ev) => {
     const fPath = ev.from.pathname;
     const tPath = ev.to.pathname;

@@ -18,15 +18,11 @@
     <div class="mt-1 flex flex-col">
       {#each headings as heading}
         <a
-          class="ml-{2 *
-            (heading.depth - 1)} underline hover:decoration-2 my-0.5"
+          style="margin-left: {0.25 * 2 * (heading.depth - 1)}rem;"
+          class="underline hover:decoration-2 my-0.5"
           href="#{heading.slug}">{heading.text}</a
         >
       {/each}
     </div>
   {/if}
 </div>
-
-<style>
-  @source inline('ml-{2,4,6,8,10,12}');
-</style>
