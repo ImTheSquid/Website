@@ -14,7 +14,7 @@
   ];
 </script>
 
-<span class="flex flex-row text-2xl mb-5">
+<nav class="flex flex-row text-xl mb-6 uppercase">
   {#each pages as { name, route, match }, i}
     {#if !path.match(`^${match || route}/?$`)}
       <a href={route} class="hover:underline">{name}</a>
@@ -22,7 +22,7 @@
       <p class="font-bold">{name}</p>
     {/if}
     {#if i < pages.length - 1}
-      <p class="mx-3 font-bold">/</p>
+      <p class="mx-3 font-bold">•</p>
     {/if}
   {/each}
-</span>
+</nav>

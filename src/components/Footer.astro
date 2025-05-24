@@ -20,6 +20,16 @@ const year = new Date().getFullYear();
       </div>
     )
   }
+
+  <div
+    class=`w-full flex ${alwaysCenter ? "" : "md:justify-normal"} justify-center mb-2 underline hover:decoration-2 text-lg`
+  >
+    <button
+      onclick="document.dispatchEvent(new CustomEvent('colortoggle', { detail: {} }))"
+      >Toggle Color</button
+    >
+  </div>
+
   <div
     class=`flex flex-row text-lg font-sans justify-center ${alwaysCenter ? "" : "md:justify-normal"}`
   >
@@ -39,8 +49,9 @@ const year = new Date().getFullYear();
       >→</a
     >
   </div>
+
   <p
-    class=`font-sans mt-2 text-lg text-center ${alwaysCenter ? "" : "md:text-start"} mb-10 md:mb-0`
+    class=`font-mono mt-2 text-lg text-center ${alwaysCenter ? "" : "md:text-start"} mb-10 md:mb-0`
   >
     © {year} Jack Hogan
   </p>
