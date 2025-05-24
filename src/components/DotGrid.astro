@@ -73,6 +73,13 @@
   let mouseX = -1000;
   let mouseY = -1000;
 
+  let isColor = (window.localStorage.getItem("color") || "t") === "t";
+
+  document.addEventListener("colortoggle", (e) => {
+    isColor = !isColor;
+    window.localStorage.setItem("color", isColor ? "t" : "f");
+  });
+
   document.addEventListener("mousemove", (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
@@ -133,12 +140,18 @@
         delta,
         mouseX: mouseX + window.scrollX,
         mouseY: mouseY + window.scrollY - offsetY,
+        useColor: isColor,
       });
     });
 
-    requestAnimationFrame(render);
+    // Don't render dots more than once on mobile displays
+    if (rootContent.getBoundingClientRect().width >= 768) {
+      requestAnimationFrame(render);
+    }
   }
   render(0);
+
+  window.addEventListener("resize", (_) => render(0));
 </script>
 
 <style>

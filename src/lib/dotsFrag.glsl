@@ -3,6 +3,7 @@ uniform vec2 u_mouse; // Mouse position (normalized)
 uniform float u_radius; // Mouse interaction radius
 uniform vec2 u_resolution;
 uniform int u_dark;
+uniform int u_color;
 uniform vec4 u_box; // The highlighted box
 uniform float u_boxBrightness;
 
@@ -26,5 +27,7 @@ void main() {
     // Set dot color using OKLCH-inspired values
     float l = brightness;
     float dark = float(u_dark);
-    gl_FragColor = vec4(oklch2rgb(vec3((1.0 - dark) * l + dark * (1.0 - l * 0.75), 0.1332, 226.06)), 1.0); // RGB based on brightness
+    float color = float(u_color);
+    vec3 colored = oklch2rgb(vec3((1.0 - dark) * l + dark * (1.0 - l * 0.75), 0.1332 * color, 226.06));
+    gl_FragColor = vec4(colored, 1.0); // RGB based on brightness
 }
