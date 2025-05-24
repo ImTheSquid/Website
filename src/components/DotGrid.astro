@@ -72,6 +72,22 @@
 
   let mouseX = -1000;
   let mouseY = -1000;
+  let shouldUpdate = true;
+  let shouldUpdateTimeout: NodeJS.Timeout | null = null;
+
+  function startUpdating() {
+    shouldUpdate = true;
+    let needsInit = true;
+    if (shouldUpdateTimeout) {
+      clearTimeout(shouldUpdateTimeout);
+      needsInit = false;
+    }
+    shouldUpdateTimeout = setTimeout(() => {
+      shouldUpdate = false;
+      shouldUpdateTimeout = null;
+    }, 1000);
+    if (needsInit) render(0);
+  }
 
   let isColor = (window.localStorage.getItem("color") || "t") === "t";
 
@@ -83,6 +99,7 @@
   document.addEventListener("mousemove", (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
+    startUpdating();
   });
 
   let currentBox: Element | null = null;
@@ -145,13 +162,15 @@
     });
 
     // Don't render dots more than once on mobile displays
-    if (rootContent.getBoundingClientRect().width >= 768) {
+    if (rootContent.getBoundingClientRect().width >= 768 && shouldUpdate) {
       requestAnimationFrame(render);
     }
   }
-  render(0);
+  startUpdating();
 
-  window.addEventListener("resize", (_) => render(0));
+  window.addEventListener("resize", (_) => startUpdating());
+
+  window.addEventListener("scroll", (_) => startUpdating());
 </script>
 
 <style>
