@@ -162,7 +162,7 @@
     });
 
     // Don't render dots more than once on mobile displays
-    if (rootContent.getBoundingClientRect().width >= 768 && shouldUpdate) {
+    if (shouldUpdate) {
       requestAnimationFrame(render);
     }
   }
