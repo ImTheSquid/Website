@@ -10,7 +10,9 @@ const { name, title, timePeriod } = Astro.props;
 
 <div class="dot-control pb-10">
   <h2 class="font-title text-3xl md:text-4xl">{name}</h2>
-  <h3 class="font-sans italic text-xl md:text-2xl break-words">
+  <h3
+    class="font-sans italic text-xl md:text-2xl break-words text-neutral-600 dark:text-neutral-400 py-2"
+  >
     {title}, <span class="whitespace-nowrap">{timePeriod}</span>
   </h3>
   <div class="font-serif md:text-lg">
