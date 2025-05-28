@@ -77,16 +77,14 @@
 
   function startUpdating() {
     shouldUpdate = true;
-    let needsInit = true;
     if (shouldUpdateTimeout) {
-      clearTimeout(shouldUpdateTimeout);
-      needsInit = false;
+      return;
     }
     shouldUpdateTimeout = setTimeout(() => {
       shouldUpdate = false;
       shouldUpdateTimeout = null;
     }, 1000);
-    if (needsInit) render(0);
+    render(0);
   }
 
   let isColor = (window.localStorage.getItem("color") || "t") === "t";
@@ -161,7 +159,7 @@
       });
     });
 
-    // Don't render dots more than once on mobile displays
+    // Don't render dots unless in updating window
     if (shouldUpdate) {
       requestAnimationFrame(render);
     }
