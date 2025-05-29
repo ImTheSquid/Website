@@ -65,11 +65,19 @@ const {
     class="bg-gray-50 dark:bg-gray-950 dark:text-gray-100 overflow-x-hidden"
   >
     <DotGrid />
+    <!--
+    This is a dumb fix that essentially creates a blur that is only the height of the screen.
+    This fixes a safari rendering bug that would cause it to disappear if it was the height of the full div.
+    -->
+    <div
+      class="fixed left-1/2 top-0 transform -translate-x-1/2 w-full max-w-3xl h-full backdrop-blur-lg z-[-1] pointer-events-none"
+    >
+    </div>
     <div
       id="root-content"
       class="selection:bg-theme flex flex-col items-center w-screen mb-4"
     >
-      <div class="flex-1 w-full max-w-3xl backdrop-blur-lg">
+      <div class="flex-1 w-full max-w-3xl">
         <div class="px-4 items-center md:w-11/12">
           <slot />
         </div>
