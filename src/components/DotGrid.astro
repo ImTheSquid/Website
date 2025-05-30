@@ -118,6 +118,7 @@
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", (event) => {
       isDarkMode = event.matches;
+      allCanvasesRenderedAtLeastOnce = false;
     });
 
   // Render loop
