@@ -1,13 +1,19 @@
 ---
 interface Props {
   caption: string;
+  alwaysOneCol: boolean;
 }
 
-const { caption } = Astro.props;
+const { caption, alwaysOneCol = false } = Astro.props;
 ---
 
 <figure class="text-sm text-center font-sans">
-  <slot />
+  <div
+    class={"items-center grid grid-cols-1 gap-1" +
+      (!alwaysOneCol ? " md:grid-cols-2" : "")}
+  >
+    <slot />
+  </div>
 
   <figcaption>{caption}</figcaption>
 </figure>

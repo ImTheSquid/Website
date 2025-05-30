@@ -1,14 +1,18 @@
 ---
+import { Picture } from "astro:assets";
 interface Props {
-  src: string;
+  src: ImageMetadata;
   alt: string;
+  gif?: boolean;
 }
 
-const { src, alt } = Astro.props;
+const { src, alt, gif = false } = Astro.props;
 ---
 
-<img
-  class="w-full md:w-[50vw] lg:w-[44vw] xl:w-[33vw] rounded-md m-1"
+<Picture
+  class="w-full md:w-[50vw] lg:w-[44vw] xl:w-[33vw] rounded-md"
   src={src}
+  formats={gif ? ["gif"] : ["avif", "webp"]}
   alt={alt}
+  loading="lazy"
 />
