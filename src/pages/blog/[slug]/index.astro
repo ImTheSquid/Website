@@ -46,20 +46,20 @@ const { Content, headings } = await render();
     </h2>
     {
       lastUpdateDate ? (
-        <h3 class="font-sans text-xl">
+        <h2 class="font-sans text-xl">
           Updated <FormattedDate date={lastUpdateDate} />
-        </h3>
+        </h2>
       ) : (
         ""
       )
     }
-    <h4 class="text-lg font-sans mb-4">
+    <h3 class="text-lg font-sans mb-4">
       Tags: <span class="font-mono"
         >{
           tags.map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)
         }</span
       >
-    </h4>
+    </h3>
 
     {
       headings.length > 0 ? (
