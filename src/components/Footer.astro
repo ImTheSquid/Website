@@ -5,6 +5,7 @@ interface Props {
 }
 const { alwaysCenter = false, isBlog = false } = Astro.props;
 const year = new Date().getFullYear();
+const toggleColorStyle = isBlog ? "hidden md:flex" : "flex";
 ---
 
 <footer class="mt-4 w-full">
@@ -22,7 +23,7 @@ const year = new Date().getFullYear();
   }
 
   <div
-    class=`w-full flex ${alwaysCenter ? "" : "md:justify-normal"} justify-center mb-2 underline hover:decoration-2 text-lg`
+    class=`w-full ${toggleColorStyle} ${alwaysCenter ? "" : "md:justify-normal"} justify-center mb-2 underline hover:decoration-2 text-lg`
   >
     <button
       onclick="document.dispatchEvent(new CustomEvent('colortoggle', { detail: {} }))"
