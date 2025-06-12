@@ -22,7 +22,7 @@ export default defineConfig({
     webAnalytics: {
       enabled: true,
     },
-    imageService: true,
+    imageService: false,
     devImageService: "sharp",
   }),
   site: "https://jackhogan.me",
