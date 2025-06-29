@@ -24,6 +24,7 @@
         mouseY,
         delta: 1,
         box: null,
+        useColor: true,
       });
 
       const bcanvas = document.getElementById("genblur") as HTMLCanvasElement;
@@ -51,6 +52,7 @@
       mouseY,
       delta: 1,
       box: null,
+      useColor: true,
     });
   });
 

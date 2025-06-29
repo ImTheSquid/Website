@@ -16,7 +16,7 @@ export const GET: APIRoute = async ({ site }) => {
       content: `http://purl.org/rss/1.0/modules/content/`,
       atom: `http://www.w3.org/2005/Atom`,
     },
-    title: "Jack's Blog",
+    title: "Jack Hogan's Blog",
     description: "Where Jack writes about whatever's on his mind.",
     site: site!,
     customData:
