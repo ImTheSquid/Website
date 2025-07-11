@@ -29,5 +29,5 @@ void main() {
     float dark = float(u_dark);
     float color = float(u_color);
     vec3 colored = oklch2rgb(vec3((1.0 - dark) * l + dark * (1.0 - l * 0.75), 0.1332 * color, 226.06));
-    gl_FragColor = vec4(colored, 1.0); // RGB based on brightness
+    gl_FragColor = vec4(colored, 0.75); // RGB based on brightness
 }
