@@ -7,7 +7,7 @@ pkgs.mkShell {
           tailwindcss
           prettierd
           corepack_latest
-          nodejs_latest
+          nodejs_22
           eslint
           nodePackages.vercel
     ];
