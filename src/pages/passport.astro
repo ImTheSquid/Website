@@ -7,6 +7,9 @@ const res = await fetch("https://id.purduehackers.com/api/scan", {
     id: parseInt(process.env.PH_PASSPORT_ID ?? "0"),
     secret: process.env.PH_PASSPORT_SECRET ?? "NOSECRET",
   }),
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 if (!res.ok) {
