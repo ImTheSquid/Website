@@ -16,6 +16,7 @@ import Image from "@components/content/Image.astro";
 import Blockquote from "@components/content/Blockquote.astro";
 import TableOfContents from "@components/TableOfContents.svelte";
 import H4 from "@components/content/H4.astro";
+import BlogFormattedDate from "@components/BlogFormattedDate.astro";
 
 export const getStaticPaths = (async () => {
   const entries = await getCollection("blog");
@@ -42,7 +43,7 @@ const { Content, headings } = await render();
     >
     <h1 class="font-title text-7xl mt-5 text-balance">{title}</h1>
     <h2 class="font-sans text-2xl">
-      <FormattedDate date={publishDate} />
+      <BlogFormattedDate date={publishDate} />
     </h2>
     {
       lastUpdateDate ? (

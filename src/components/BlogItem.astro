@@ -1,9 +1,10 @@
 ---
+import BlogFormattedDate from "./BlogFormattedDate.astro";
 import BlogTag from "./BlogTag.astro";
 import FormattedDate from "./FormattedDate.astro";
 interface Props {
   title: string;
-  publishDate: Date;
+  publishDate?: Date;
   lastUpdatedDate?: Date;
   tags: string[];
   description: string;
@@ -21,7 +22,7 @@ const { title, publishDate, lastUpdatedDate, tags, description, href } =
   <h3
     class="font-sans italic text-xl md:text-2xl break-words py-2 text-neutral-600 dark:text-neutral-400"
   >
-    <FormattedDate date={publishDate} monthFormat="short" />
+    <BlogFormattedDate date={publishDate} monthFormat="short" />
     •
     <span class="whitespace-nowrap font-mono"
       >{

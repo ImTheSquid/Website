@@ -1,0 +1,17 @@
+---
+import FormattedDate from "./FormattedDate.astro";
+interface Props {
+  date?: Date;
+  monthFormat?: "long" | "short";
+}
+
+const { date, monthFormat = "long" } = Astro.props;
+---
+
+{
+  date ? (
+    <FormattedDate date={date} monthFormat={monthFormat} />
+  ) : (
+    <span>DRAFT</span>
+  )
+}
