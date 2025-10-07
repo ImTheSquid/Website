@@ -1,4 +1,5 @@
 ---
+import "@styles/global.css";
 interface Props {
   name: string;
 }
@@ -24,6 +25,7 @@ const { name } = Astro.props;
 </html>
 
 <style>
+  @reference "@styles/global.css";
   html,
   body {
     margin: 0;

@@ -8,7 +8,7 @@
 
 <div class="flex flex-col border border-black p-2 m-1 dark:border-white">
   <button
-    class="flex items-start justify-between"
+    class="flex items-start justify-between cursor-pointer"
     onclick={(_) => (show = !show)}
   >
     <p><strong>Table of Contents</strong></p>

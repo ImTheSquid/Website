@@ -3,8 +3,6 @@ import { defineConfig } from "astro/config";
 
 import mdx from "@astrojs/mdx";
 
-import tailwind from "@astrojs/tailwind";
-
 import vercel from "@astrojs/vercel";
 
 import svelte from "@astrojs/svelte";
@@ -15,9 +13,11 @@ import { dataUrl } from "vite-plugin-data-url";
 
 import react from "@astrojs/react";
 
+import tailwindcss from "@tailwindcss/vite";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [mdx(), tailwind(), svelte(), react()],
+  integrations: [mdx(), svelte(), react()],
   adapter: vercel({
     webAnalytics: {
       enabled: true,
@@ -36,6 +36,6 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [arraybuffer(), dataUrl({ limit: 100000000 })],
+    plugins: [arraybuffer(), dataUrl({ limit: 100000000 }), tailwindcss()],
   },
 });
