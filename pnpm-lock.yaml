@@ -26,18 +26,6 @@ importers:
       '@astrojs/vercel':
         specifier: ^8.2.8
         version: 8.2.8(astro@5.14.1(@types/node@24.7.0)(@vercel/blob@1.0.2)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(typescript@5.9.3)(yaml@2.8.1))(react@19.2.0)(rollup@4.52.4)(svelte@5.39.9)
-      '@fontsource-variable/dm-sans':
-        specifier: ^5.2.8
-        version: 5.2.8
-      '@fontsource-variable/lora':
-        specifier: ^5.2.8
-        version: 5.2.8
-      '@fontsource/dm-mono':
-        specifier: ^5.2.7
-        version: 5.2.7
-      '@fontsource/dm-serif-display':
-        specifier: ^5.2.8
-        version: 5.2.8
       '@purduehackers/time':
         specifier: ^0.7.0
         version: 0.7.0(@types/react@19.2.2)(date-fns@4.1.0)(react@19.2.0)
@@ -449,18 +437,6 @@ packages:
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
-
-  '@fontsource-variable/dm-sans@5.2.8':
-    resolution: {integrity: sha512-AxkvMTvNWgfrmlyjiV05vlHYJa+nRQCf1EfvIrQAPBpFJW0O9VTz7oAFr9S3lvbWdmnFoBk7yFqQL86u64nl2g==}
-
-  '@fontsource-variable/lora@5.2.8':
-    resolution: {integrity: sha512-cxjTJ9BbOWIzusewR4UMBLVePvTSWV6dtNaNsCkF/oKoyA68fJGWfaYCILOOP1BObE4dmjfZ3xo6m9hdHhtYhg==}
-
-  '@fontsource/dm-mono@5.2.7':
-    resolution: {integrity: sha512-Ma1az2atTVgQWuOWwjuxx26p/6A6CU9HBNKq1CFV6YKpKhpswnf9ry9Ql4+T6bTZzkdtSfS6tjJvqZOljVzIFQ==}
-
-  '@fontsource/dm-serif-display@5.2.8':
-    resolution: {integrity: sha512-GYSDSlGU6vyhv9a5MwaiVNf9HCuSVpK8hEFRyG4NNDHCDeHiX7YHDAcWsaoLKKcfXLgWG9YkBkk9T3SxM4rAjQ==}
 
   '@iconify/tools@4.1.4':
     resolution: {integrity: sha512-s6BcNUcCxQ3S6cvhlsoWzOuBt8qKXdVyXB9rT57uSJ/ARHD7dVM43+5ERBWn3tmkMWXeJ/s9DPVc3dUasayzeA==}
@@ -3686,14 +3662,6 @@ snapshots:
 
   '@fastify/busboy@2.1.1':
     optional: true
-
-  '@fontsource-variable/dm-sans@5.2.8': {}
-
-  '@fontsource-variable/lora@5.2.8': {}
-
-  '@fontsource/dm-mono@5.2.7': {}
-
-  '@fontsource/dm-serif-display@5.2.8': {}
 
   '@iconify/tools@4.1.4':
     dependencies:
