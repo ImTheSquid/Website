@@ -9,6 +9,5 @@ pkgs.mkShell {
           corepack
           nodejs_22
           eslint
-          nodePackages.vercel
     ];
     }

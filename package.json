@@ -21,17 +21,19 @@
     "@types/react-dom": "^19.2.3",
     "@vercel/og": "^0.6.8",
     "astro": "^5.16.5",
-    "astro-iconify": "^1.2.0",
+    "astro-icon": "^1.1.5",
     "astro-seo": "^0.8.4",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "sharp": "^0.34.5",
     "svelte": "^5.45.10",
     "tailwindcss": "^4.1.18",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vercel": "^50.0.0"
   },
   "packageManager": "pnpm@9.1.0+sha1.217063ce3fcbf44f3051666f38b810f1ddefee4a",
   "devDependencies": {
+    "@iconify-json/ri": "^1.2.6",
     "@svelte-put/qr": "^2.1.1",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",

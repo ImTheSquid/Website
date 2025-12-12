@@ -15,9 +15,11 @@ import react from "@astrojs/react";
 
 import tailwindcss from "@tailwindcss/vite";
 
+import icon from "astro-icon";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [mdx(), svelte(), react()],
+  integrations: [mdx(), svelte(), react(), icon()],
   adapter: vercel({
     webAnalytics: {
       enabled: true,

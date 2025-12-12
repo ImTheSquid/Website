@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 import BlogLayout from "@layouts/BlogLayout.astro";
 import FormattedDate from "@components/FormattedDate.astro";
 import BlogTag from "@components/BlogTag.astro";
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 import Link from "@components/content/Link.astro";
 import UnorderedList from "@components/content/UnorderedList.astro";
 import OrderedList from "@components/content/OrderedList.astro";
@@ -38,7 +38,7 @@ const { Content, headings } = await render();
     <a href="/blog" aria-label="Back to blog landing page"
       ><Icon
         name="ri:arrow-left-line"
-        width={40}
+        size={40}
         class="hover:text-theme hover:-translate-x-1 ease-linear transition-all"
       /></a
     >

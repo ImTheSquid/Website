@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-iconify";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   name: string;
@@ -12,7 +12,7 @@ const { name, href } = Astro.props;
 <a href={href} target="_blank" class="mr-4">
   <Icon
     name={name}
-    width={28}
+    size={28}
     class="hover:text-theme hover:scale-110 ease-linear transition-all text-neutral-600 dark:text-neutral-400"
   />
 </a>
