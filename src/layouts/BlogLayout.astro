@@ -1,6 +1,6 @@
 ---
 import "@styles/global.css";
-// import { ClientRouter } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import DotGrid from "@components/DotGrid.astro";
 import Footer from "@components/Footer.astro";
 import { SEO } from "astro-seo";
@@ -28,7 +28,7 @@ const {
     <meta name="generator" content={Astro.generator} />
     <meta name="darkreader-lock" />
     <title>{title} | Jack Hogan</title>
-    <!-- <ClientRouter /> -->
+    <ClientRouter />
     <SEO
       title={title}
       description={description}
@@ -84,7 +84,7 @@ const {
   </body>
 </html>
 <style>
-  @reference "@styles/global.css";
+  @import "@styles/global.css" reference;
   body {
     text-wrap: pretty;
   }

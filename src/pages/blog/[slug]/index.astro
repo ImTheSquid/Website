@@ -17,6 +17,8 @@ import Blockquote from "@components/content/Blockquote.astro";
 import TableOfContents from "@components/TableOfContents.svelte";
 import H4 from "@components/content/H4.astro";
 
+import "@styles/global.css";
+
 export const getStaticPaths = (async () => {
   const entries = await getCollection("blog");
 
@@ -93,7 +95,7 @@ const { Content, headings } = await render();
 </BlogLayout>
 
 <style is:global>
-  @reference "@styles/global.css";
+  @import "@styles/global.css" reference;
   .astro-code {
     width: 100%;
     @apply p-2 rounded-md;
