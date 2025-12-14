@@ -107,7 +107,16 @@ export class DotCanvas {
 
   private boxBrightness: number = 0;
 
-  render({ isDarkMode, mouseX, mouseY, box, delta, useColor }: RenderProps) {
+  render({
+    isDarkMode,
+    mouseX,
+    mouseY,
+    box,
+    delta,
+    useColor,
+    scrollOffsetX,
+    scrollOffsetY,
+  }: RenderProps) {
     const uResolution = this.gl.getUniformLocation(
       this.program,
       "u_resolution",
@@ -117,6 +126,10 @@ export class DotCanvas {
     const uDark = this.gl.getUniformLocation(this.program, "u_dark")!;
     const uColor = this.gl.getUniformLocation(this.program, "u_color")!;
     const uBox = this.gl.getUniformLocation(this.program, "u_box")!;
+    const uScrollOffset = this.gl.getUniformLocation(
+      this.program,
+      "u_scrollOffset",
+    )!;
     const uBoxBrightness = this.gl.getUniformLocation(
       this.program,
       "u_boxBrightness",
@@ -132,6 +145,8 @@ export class DotCanvas {
       };
       this.generateDots();
     }
+
+    this.gl.uniform2f(uScrollOffset, scrollOffsetX, scrollOffsetY);
 
     if (box) {
       const { left, right, top, bottom } = box;
@@ -175,4 +190,6 @@ export interface RenderProps {
   delta: number;
   box: Box | null;
   useColor: boolean;
+  scrollOffsetX: number;
+  scrollOffsetY: number;
 }

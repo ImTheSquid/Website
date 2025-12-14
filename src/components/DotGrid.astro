@@ -1,4 +1,9 @@
-<div id="canvas-container" transition:persist></div>
+---
+import "@styles/global.css";
+---
+
+<div id="canvas-container" transition:persist="dots" transition:persist-props>
+</div>
 
 <script>
   import { DotCanvas } from "@lib/dots";
@@ -8,71 +13,24 @@
   ) as HTMLDivElement;
   let rootContent = document.getElementById("root-content");
 
-  const maxCanvasHeight = 4080; // Example limit, adjust based on your GPU.
-  const canvases: HTMLCanvasElement[] = [];
-  let dotsInstances: DotCanvas[] = [];
+  const canvas = document.createElement("canvas");
+  canvas.style.position = "fixed";
+  canvas.style.left = "0";
+  canvas.style.top = "0";
+  canvas.style.pointerEvents = "none";
+  canvas.style.filter = "blur(7px)";
+  canvasContainer.appendChild(canvas);
 
-  let allCanvasesRenderedAtLeastOnce = false;
+  const dots = new DotCanvas(canvas);
+  const DOT_SPACING = 40;
 
-  function createCanvas() {
-    const canvas = document.createElement("canvas");
-    canvas.style.position = "absolute";
-    canvas.style.left = "0";
-    canvas.style.pointerEvents = "none";
-    canvas.style.filter = "blur(7px)";
-    canvasContainer.appendChild(canvas);
-    return canvas;
+  function updateCanvas() {
+    canvas.width = window.innerWidth - 1;
+    canvas.height = window.innerHeight;
+    dots.generateDots();
   }
 
-  function updateCanvases() {
-    rootContent = document.getElementById("root-content");
-    if (!rootContent) {
-      throw new Error("No root content!");
-    }
-
-    const totalHeight = Math.max(rootContent.scrollHeight, window.innerHeight);
-    const totalWidth = Math.max(rootContent.scrollWidth, window.innerWidth) - 1;
-
-    // Update container height
-    canvasContainer.style.height = `${totalHeight}px`;
-
-    // Determine the number of canvases needed
-    const canvasCount = Math.ceil(totalHeight / maxCanvasHeight);
-
-    // Adjust existing canvases or create new ones
-    while (canvases.length < canvasCount) {
-      const canvas = createCanvas();
-      canvases.push(canvas);
-      dotsInstances.push(new DotCanvas(canvas));
-    }
-
-    while (canvases.length > canvasCount) {
-      const canvas = canvases.pop();
-      if (canvas) {
-        canvasContainer.removeChild(canvas);
-      }
-      dotsInstances.pop();
-    }
-
-    // Update canvas dimensions and positions
-    canvases.forEach((canvas, index) => {
-      canvas.width = totalWidth;
-      canvas.height = Math.min(
-        maxCanvasHeight,
-        totalHeight - index * maxCanvasHeight,
-      );
-      canvas.style.top = `${index * maxCanvasHeight}px`;
-    });
-
-    // Regenerate dots for all canvases
-    dotsInstances.forEach((dots) => {
-      dots.generateDots();
-    });
-
-    allCanvasesRenderedAtLeastOnce = false;
-  }
-
-  updateCanvases();
+  updateCanvas();
 
   let mouseX = -1000;
   let mouseY = -1000;
@@ -81,9 +39,7 @@
 
   function startUpdating() {
     shouldUpdate = true;
-    if (shouldUpdateTimeout) {
-      return;
-    }
+    if (shouldUpdateTimeout) return;
     shouldUpdateTimeout = setTimeout(() => {
       shouldUpdate = false;
       shouldUpdateTimeout = null;
@@ -118,76 +74,54 @@
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", (event) => {
       isDarkMode = event.matches;
-      allCanvasesRenderedAtLeastOnce = false;
     });
 
-  // Render loop
   let lastFrameTime = 0;
-  let lastSize: { width: number; height: number } = { width: 0, height: 0 };
   function render(dt: DOMHighResTimeStamp) {
     const delta = (dt - lastFrameTime) * 5e-3;
     lastFrameTime = dt;
 
-    if (!rootContent) return;
+    const scrollOffsetX = window.scrollX % DOT_SPACING;
+    const scrollOffsetY = window.scrollY % DOT_SPACING;
 
-    // Constantly check to make sure height is right
-    // Fixes issues where images would load in and mess things up (resize event not fired)
-    const { width, height } = rootContent.getBoundingClientRect();
-    if (lastSize.width !== width || lastSize.height !== height) {
-      lastSize = { width, height };
-      updateCanvases();
-    }
-
-    const DOT_INSTANCE_UPDATE_THRESHOLD = 200;
-    dotsInstances.forEach((dots, index) => {
-      const offsetY = index * maxCanvasHeight;
-
-      const relativeMouseY = mouseY + window.scrollY - offsetY;
-      const outsideBounds =
-        relativeMouseY < -DOT_INSTANCE_UPDATE_THRESHOLD ||
-        relativeMouseY > maxCanvasHeight + DOT_INSTANCE_UPDATE_THRESHOLD;
-      if (outsideBounds && allCanvasesRenderedAtLeastOnce) {
-        return;
-      }
-
-      dots.render({
-        box: currentBox
-          ? {
-              top:
-                currentBox.getBoundingClientRect().top +
-                window.scrollY -
-                offsetY,
-              bottom:
-                currentBox.getBoundingClientRect().bottom +
-                window.scrollY -
-                offsetY,
-              left: currentBox.getBoundingClientRect().left + window.scrollX,
-              right: currentBox.getBoundingClientRect().right + window.scrollX,
-            }
-          : null,
-        isDarkMode,
-        delta,
-        mouseX: mouseX + window.scrollX,
-        mouseY: relativeMouseY,
-        useColor: isColor,
-      });
+    dots.render({
+      box: currentBox
+        ? {
+            top: currentBox.getBoundingClientRect().top,
+            bottom: currentBox.getBoundingClientRect().bottom,
+            left: currentBox.getBoundingClientRect().left,
+            right: currentBox.getBoundingClientRect().right,
+          }
+        : null,
+      isDarkMode,
+      delta,
+      mouseX,
+      mouseY,
+      useColor: isColor,
+      scrollOffsetX,
+      scrollOffsetY,
     });
 
-    allCanvasesRenderedAtLeastOnce = true;
-
-    // Don't render dots unless in updating window
     if (shouldUpdate) {
       requestAnimationFrame(render);
     }
   }
   startUpdating();
 
-  window.addEventListener("resize", (_) => startUpdating());
+  window.addEventListener("resize", (_) => {
+    updateCanvas();
+    startUpdating();
+  });
 
   window.addEventListener("scroll", (_) => startUpdating());
+
+  window.addEventListener("astro:before-preparation", (_) => {
+    canvas.remove();
+  });
 </script>
 
 <style>
+  @import "@styles/global.css" reference;
   #canvas-container {
     position: absolute;
     top: 0;

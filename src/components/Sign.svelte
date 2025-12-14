@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
 
   onMount(() => {
-    setTimeout(() => {
+    setInterval(() => {
       const lt = new LightningTime();
       const time = lt.convertToLightning(new Date());
       const colors = time.colors;

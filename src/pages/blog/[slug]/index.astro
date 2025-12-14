@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 import BlogLayout from "@layouts/BlogLayout.astro";
 import FormattedDate from "@components/FormattedDate.astro";
 import BlogTag from "@components/BlogTag.astro";
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 import Link from "@components/content/Link.astro";
 import UnorderedList from "@components/content/UnorderedList.astro";
 import OrderedList from "@components/content/OrderedList.astro";
@@ -17,6 +17,8 @@ import Blockquote from "@components/content/Blockquote.astro";
 import TableOfContents from "@components/TableOfContents.svelte";
 import H4 from "@components/content/H4.astro";
 import BlogFormattedDate from "@components/BlogFormattedDate.astro";
+
+import "@styles/global.css";
 
 export const getStaticPaths = (async () => {
   const entries = await getCollection("blog");
@@ -37,7 +39,7 @@ const { Content, headings } = await render();
     <a href="/blog" aria-label="Back to blog landing page"
       ><Icon
         name="ri:arrow-left-line"
-        width={40}
+        size={40}
         class="hover:text-theme hover:-translate-x-1 ease-linear transition-all"
       /></a
     >
@@ -94,6 +96,7 @@ const { Content, headings } = await render();
 </BlogLayout>
 
 <style is:global>
+  @import "@styles/global.css" reference;
   .astro-code {
     width: 100%;
     @apply p-2 rounded-md;
