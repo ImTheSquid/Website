@@ -65,13 +65,22 @@ const { Content, headings } = await render();
     </h3>
 
     {
+      !publishDate && (
+        <div class="border-2 border-dashed border-red-500 p-2 m-1 text-xl mb-4">
+          <Icon name="ri:git-pr-draft-line" size={40} />
+          This post is a draft! Please don&apos;t share it around.
+        </div>
+      )
+    }
+
+    {
       headings.length > 0 ? (
         <TableOfContents
           headings={headings.filter((h) => h.depth <= 3)}
           client:load
         />
       ) : (
-        ""
+        <span />
       )
     }
   </div>

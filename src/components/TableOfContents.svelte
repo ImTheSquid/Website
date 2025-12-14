@@ -6,7 +6,7 @@
   let show = $state(false);
 </script>
 
-<div class="flex flex-col border border-black p-2 m-1 dark:border-white">
+<div class="flex flex-col border-2 border-black p-2 m-1 dark:border-white">
   <button
     class="flex items-start justify-between cursor-pointer"
     onclick={(_) => (show = !show)}
