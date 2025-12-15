@@ -7,7 +7,8 @@ const { href, id } = Astro.props;
 
 // Check if href is same origin/page
 const url = new URL(href, Astro.url);
-const isSamePage = url.origin === Astro.url.origin;
+const isSamePage =
+  url.origin === Astro.url.origin && url.pathname === Astro.url.pathname;
 ---
 
 <a
