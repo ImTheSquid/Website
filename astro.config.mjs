@@ -19,6 +19,7 @@ import icon from "astro-icon";
 
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import remarkGfm from "remark-gfm";
 
 // https://astro.build/config
 export default defineConfig({
@@ -39,7 +40,7 @@ export default defineConfig({
         dark: "github-dark",
       },
     },
-    remarkPlugins: [remarkMath],
+    remarkPlugins: [remarkMath, remarkGfm],
     rehypePlugins: [rehypeKatex],
   },
   vite: {

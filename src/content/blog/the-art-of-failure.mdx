@@ -36,7 +36,7 @@ $$
 K_{tree}(T_1, T_2) = {V_{T_1}}^T V_{T_2} = \sum_{n_1 \in N_{T_1}} \sum_{n_2 \in N_{T_2}} C(n_1, n_2)
 $$
 
-Where $V_{T_i}$ is a vector of all possible subtrees of tree $i$ and $C$ is a recursive comparison function in $O(n^x)$ [CITE]. This equation defines the search protocol for the tree kernel, and would end up sinking this entire branch of research. To explain why, let’s take a closer look at this equation. The most relevant portion is the recursive condition of $C$, defined as:
+Where $V_{T_i}$ is a vector of all possible subtrees of tree $i$ and $C$ is a recursive comparison function in $O(n^x)$[^1]. This equation defines the search protocol for the tree kernel, and would end up sinking this entire branch of research. To explain why, let’s take a closer look at this equation. The most relevant portion is the recursive condition of $C$, defined as:
 
 $$
 C(n_1, n_2) = \lambda_{tree} \prod_i^{\textrm{nc}(n_1)} (1 + \max_{\textrm{ch} \in \textrm{ch}_{n_2}} C(\textrm{ch}_i(n_1), \textrm{ch}))
@@ -169,3 +169,5 @@ There were of course days where I felt down, even hopeless, at the thought of tr
 I am endlessly thankful to Andres and everyone else who supported me while working on CodeCheck and excited to work on whatever’s next. CodeCheck may have been a failure in some respects, but in others it was a work of art. The intricacies of building a complex model to find plagiarism created something nonfunctional in this specific case but still beautiful nonetheless. Every step was dutifully thought out by myself and others, and the journey mattered much more than the destination. I’m reminded of a quote by Larry Page: “It’s very hard to fail completely if you aim high enough”, and I don’t think there’s a word to describe how high I aimed; shooting for the moon would be an understatement.
 
 CodeCheck was yet another entry in my endless cycle of building. I ideate, I create, then I either ship or learn what to do better next time. I tend to oscillate interest between software and hardware projects, so I’ve really enjoyed working on Beacons since they give me that physical presence CodeCheck never would’ve had even if it had worked out perfectly. I don’t know where I’ll be or what I’ll build next, but I’m excited for whatever the world sends my way. Anything and everything can contribute to the art I make.
+
+[^1]: Song, H.-J., Park, S.-B., and Park, S. Y. Computation of program source code similarity by composition of parse tree and call graph. Mathematical Problems in Engineering, 2015:429807, 2015. doi:10.1155/2015/429807.
