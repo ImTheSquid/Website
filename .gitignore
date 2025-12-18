@@ -43,3 +43,6 @@ examples/**/env.d.ts
 
 .astro
 .direnv
+
+# drawio
+*.bkp

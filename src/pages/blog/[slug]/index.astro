@@ -111,6 +111,15 @@ const { Content, headings } = await render();
     @apply p-2 rounded-md;
     max-height: 80vh;
   }
+  .katex-display {
+    margin: auto !important;
+  }
+  #footnote-label {
+    @apply sr-only;
+  }
+  .footnotes {
+    @apply mt-4;
+  }
   @media (prefers-color-scheme: dark) {
     .astro-code,
     .astro-code span {
