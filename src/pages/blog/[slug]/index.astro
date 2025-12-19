@@ -14,7 +14,7 @@ import H3 from "@components/content/H3.astro";
 import Hr from "@components/content/Hr.astro";
 import Image from "@components/content/Image.astro";
 import Blockquote from "@components/content/Blockquote.astro";
-import TableOfContents from "@components/TableOfContents.svelte";
+import TableOfContents from "@components/TableOfContents.astro";
 import H4 from "@components/content/H4.astro";
 import BlogFormattedDate from "@components/BlogFormattedDate.astro";
 
@@ -75,10 +75,7 @@ const { Content, headings } = await render();
 
     {
       headings.length > 0 ? (
-        <TableOfContents
-          headings={headings.filter((h) => h.depth <= 3)}
-          client:load
-        />
+        <TableOfContents headings={headings.filter((h) => h.depth <= 3)} />
       ) : (
         <span />
       )

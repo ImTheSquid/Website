@@ -1,0 +1,45 @@
+---
+import type { MarkdownHeading } from "astro";
+interface Props {
+  headings: MarkdownHeading[];
+}
+const { headings }: Props = Astro.props;
+const useHeadings = headings.filter(
+  (h) => !(h.text == "Footnotes" && h.depth == 2),
+);
+---
+
+<details class="border-2 border-black p-2 m-1 dark:border-white">
+  <summary class="flex items-start justify-between cursor-pointer">
+    <strong>Table of Contents</strong>
+    <span class="arrow">↓</span>
+  </summary>
+  <div class="mt-1 flex flex-col">
+    {
+      useHeadings.map((heading) => (
+        <a
+          style={`margin-left: ${0.25 * 2 * (heading.depth - 1)}rem;`}
+          class="underline hover:decoration-2 my-0.5"
+          href={`#${heading.slug}`}
+        >
+          {heading.text}
+        </a>
+      ))
+    }
+  </div>
+</details>
+
+<style>
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .arrow {
+    transition: transform 0.2s;
+  }
+  details[open] .arrow {
+    transform: rotate(180deg);
+  }
+</style>
