@@ -10,7 +10,7 @@ const { src, alt, gif = false } = Astro.props;
 ---
 
 <Picture
-  class="w-full md:w-[50vw] lg:w-[44vw] xl:w-[33vw] rounded-md"
+  class="w-full md:w-[50vw] lg:w-[44vw] xl:w-[33vw] rounded-md transition hover:bg-gray-100"
   src={src}
   formats={gif ? ["gif"] : ["avif", "webp"]}
   alt={alt}

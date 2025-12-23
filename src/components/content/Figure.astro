@@ -9,11 +9,11 @@ const { caption, alwaysOneCol = false } = Astro.props;
 
 <figure class="text-sm text-center font-sans">
   <div
-    class={"items-center grid grid-cols-1 gap-1" +
+    class={"items-center grid grid-cols-1 gap-1 rounded-md" +
       (!alwaysOneCol ? " md:grid-cols-2" : "")}
   >
     <slot />
   </div>
 
-  <figcaption>{caption}</figcaption>
+  <figcaption class="pt-2">{caption}</figcaption>
 </figure>
