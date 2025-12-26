@@ -9,6 +9,13 @@ interface Size {
   height: number;
 }
 
+export interface Box {
+  left: number;
+  bottom: number;
+  right: number;
+  top: number;
+}
+
 export class DotCanvas {
   private canvas: HTMLCanvasElement | OffscreenCanvas;
   private gl: WebGLRenderingContext;
@@ -80,6 +87,12 @@ export class DotCanvas {
   }
 
   private positions: number[] = [];
+  private animatedBox: Box | null = null;
+  private targetBox: Box | null = null;
+
+  private lerp(current: number, target: number, factor: number): number {
+    return current + (target - current) * factor;
+  }
 
   generateDots() {
     // Create grid of dot positions
@@ -148,12 +161,40 @@ export class DotCanvas {
 
     this.gl.uniform2f(uScrollOffset, scrollOffsetX, scrollOffsetY);
 
-    if (box) {
-      const { left, right, top, bottom } = box;
-      this.gl.uniform4f(uBox, left, bottom, right, top);
-      this.boxBrightness = Math.min(this.boxBrightness + delta, 1.0);
+    // Update target box
+    this.targetBox = box ? { ...box } : null;
+
+    // Animation easing factor - higher = faster transition
+    // Using frame-rate independent easing: 1 - (1 - speed)^delta
+    // Clamp delta to prevent corruption from timing edge cases
+    const clampedDelta = Math.max(0, Math.min(delta, 0.1));
+    const speed = 0.15;
+    const easeFactor = 1 - Math.pow(1 - speed, clampedDelta * 60);
+
+    if (this.targetBox) {
+      if (this.animatedBox) {
+        this.animatedBox.left = this.lerp(this.animatedBox.left, this.targetBox.left, easeFactor);
+        this.animatedBox.right = this.lerp(this.animatedBox.right, this.targetBox.right, easeFactor);
+        this.animatedBox.top = this.lerp(this.animatedBox.top, this.targetBox.top, easeFactor);
+        this.animatedBox.bottom = this.lerp(this.animatedBox.bottom, this.targetBox.bottom, easeFactor);
+      } else {
+        // Initialize animated box at target position
+        this.animatedBox = { ...this.targetBox };
+      }
+      this.boxBrightness = Math.min(this.boxBrightness + clampedDelta, 1.0);
     } else {
-      this.boxBrightness = Math.max(this.boxBrightness - delta, 0.0);
+      // No target - fade out brightness but keep animatedBox for smooth transition
+      this.boxBrightness = Math.max(this.boxBrightness - clampedDelta, 0.0);
+      // Clear animatedBox when fully faded out
+      if (this.boxBrightness <= 0) {
+        this.animatedBox = null;
+      }
+    }
+
+    // Use animated box coordinates for rendering
+    if (this.animatedBox) {
+      const { left, right, top, bottom } = this.animatedBox;
+      this.gl.uniform4f(uBox, left, bottom, right, top);
     }
 
     this.gl.uniform1f(uBoxBrightness, this.boxBrightness);
@@ -174,13 +215,6 @@ export class DotCanvas {
 
     this.gl.drawArrays(this.gl.POINTS, 0, this.positions.length / 2);
   }
-}
-
-export interface Box {
-  left: number;
-  bottom: number;
-  right: number;
-  top: number;
 }
 
 export interface RenderProps {
