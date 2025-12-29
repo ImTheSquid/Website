@@ -17,6 +17,10 @@ import tailwindcss from "@tailwindcss/vite";
 
 import icon from "astro-icon";
 
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import remarkGfm from "remark-gfm";
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [mdx(), svelte(), react(), icon()],
@@ -36,6 +40,8 @@ export default defineConfig({
         dark: "github-dark",
       },
     },
+    remarkPlugins: [remarkMath, remarkGfm],
+    rehypePlugins: [rehypeKatex],
   },
   vite: {
     plugins: [arraybuffer(), dataUrl({ limit: 100000000 }), tailwindcss()],

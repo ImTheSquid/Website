@@ -1,5 +1,7 @@
 ---
 import { Picture } from "astro:assets";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
+
 interface Props {
   src: ImageMetadata;
   alt: string;
@@ -9,11 +11,24 @@ interface Props {
 const { src, alt, gif = false } = Astro.props;
 ---
 
-<Picture
-  class="w-full md:w-[50vw] lg:w-[44vw] xl:w-[33vw] rounded-md"
-  src={src}
-  formats={gif ? ["gif"] : ["avif", "webp"]}
-  alt={alt}
-  loading="lazy"
-  width={768}
-/>
+<a href={src.src} data-fancybox data-caption={alt} class="cursor-zoom-in">
+  <Picture
+    class="w-full md:w-[50vw] lg:w-[44vw] xl:w-[33vw] rounded-md transition hover:bg-gray-100"
+    src={src}
+    formats={gif ? ["gif"] : ["avif", "webp"]}
+    alt={alt}
+    loading="lazy"
+    width={768}
+  />
+</a>
+
+<script>
+  import { Fancybox } from "@fancyapps/ui";
+  Fancybox.bind("[data-fancybox]");
+</script>
+
+<style is:global>
+  .fancybox__container {
+    --fancybox-backdrop-bg: rgba(100, 100, 100, 0.8);
+  }
+</style>

@@ -19,12 +19,14 @@ export async function GET({
     data: { title, publishDate },
   },
 }: Props) {
-  const date = publishDate.toLocaleDateString("en-uk", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    timeZone: "UTC",
-  });
+  const date = publishDate
+    ? publishDate.toLocaleDateString("en-uk", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        timeZone: "UTC",
+      })
+    : "DRAFT";
 
   return getOgImage({ title, subtitle: `${date} • Jack Hogan` });
 }

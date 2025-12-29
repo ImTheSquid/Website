@@ -1,9 +1,19 @@
 ---
 interface Props {
   href: string;
+  id: string;
 }
+const { href, id } = Astro.props;
 
-const { href } = Astro.props;
+// Check if href is same origin/page
+const url = new URL(href, Astro.url);
+const isSamePage =
+  url.origin === Astro.url.origin && url.pathname === Astro.url.pathname;
 ---
 
-<a href={href} target="_blank" class="underline hover:decoration-2"><slot /></a>
+<a
+  href={href}
+  id={id}
+  target={isSamePage ? undefined : "_blank"}
+  class="underline hover:decoration-2"><slot /></a
+>
