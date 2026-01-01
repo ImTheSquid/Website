@@ -4,10 +4,9 @@ in
 pkgs.mkShell {
     buildInputs = with pkgs; [
       sass
-          tailwindcss
-          prettierd
-          corepack
-          nodejs_22
-          eslint
+      tailwindcss
+      prettierd
+      bun
+      eslint
     ];
     }
