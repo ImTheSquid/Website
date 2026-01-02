@@ -4,7 +4,7 @@ import { getOgImage } from "@lib/og";
 export async function GET() {
   return getOgImage({
     title: "Jack Hogan",
-    subtitle: TAGLINE,
+    subtitle: TAGLINE.toUpperCase(),
     size: "big",
   });
 }
