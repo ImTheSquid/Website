@@ -23,6 +23,6 @@ export const getStaticPaths = (async () => {
 const { tag } = Astro.props;
 ---
 
-<Layout>
+<Layout indexable={false}>
   <BlogList tagFilter={tag} />
 </Layout>

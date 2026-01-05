@@ -5,7 +5,7 @@ import DotGrid from "@components/DotGrid.astro";
 import Footer from "@components/Footer.astro";
 import { SEO } from "astro-seo";
 import type { CollectionEntry } from "astro:content";
-import { INDEX_META, SITE_URL } from "@lib/consts";
+import { SITE_URL } from "@lib/consts";
 
 interface Props {
   entry: CollectionEntry<"blog">;
@@ -22,7 +22,6 @@ const {
 <!doctype html>
 <html lang="en">
   <head>
-    {INDEX_META}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
