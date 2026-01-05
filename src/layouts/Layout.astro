@@ -7,7 +7,13 @@ import FeedNav from "@components/FeedNav.svelte";
 import { ClientRouter } from "astro:transitions";
 import type { TransitionDirectionalAnimations } from "astro";
 import { SEO } from "astro-seo";
-import { OG_TITLE, OG_DESCRIPTION, SITE_URL, TAGLINE } from "@lib/consts";
+import {
+  OG_TITLE,
+  OG_DESCRIPTION,
+  SITE_URL,
+  TAGLINE,
+  INDEX_META,
+} from "@lib/consts";
 
 const path = Astro.url.pathname;
 
@@ -56,6 +62,7 @@ const animation: TransitionDirectionalAnimations = {
 <!doctype html>
 <html lang="en">
   <head>
+    {INDEX_META}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
