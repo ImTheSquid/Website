@@ -2,6 +2,7 @@
 title: The Art of Failure
 description: Reflections on my undergraduate research and my relationship with it over the past three years.
 publishDate: 2025-12-29
+lastUpdateDate: 2026-01-06
 tags: [programming, research, life]
 ---
 
@@ -59,7 +60,7 @@ With this computational explosion, I realized we needed to pivot to an alternati
 
 Fast-forward a year and a half, and I was still trying my hardest to push CodeCheck forward while balancing my own commitments, including an increasingly intense class load, internships during the summer, social obligations, and membership in clubs including Purdue Hackers; it wasn't easy to do, and I was going a lot slower than I’d like to, but I was still doing research. Andres was incredibly supportive of me during this time, and I’ll always be thankful for his encouragement when I was hitting dead end after dead end.
 
-After learning more about the architecture of LLMs, I decided to try using a transformer to solve the problem. Around this time Andres told me I could consult with an AI professor on campus, something I took advantage of immediately, and good thing I did! After I presented my initial design and implementation, he promptly tore it to shreds and showed me why it wouldn’t work: transformers have no idea of “numbers” or “spans”, so even if the model could hypothetically tell if two files contain content plagiarized from one another, it would have no reliable way to report the line spans back to the overseer consistently. For a real-world analogy, this is why LLMs have so much trouble counting the letters in words or doing numeric math problems: numbers are not something they can “understand”.
+After learning more about the architecture of LLMs, I decided to try using a transformer to solve the problem. Around this time Andres told me I could consult with an AI professor on campus, something I took advantage of immediately, and good thing I did! After I presented my initial design and implementation, he promptly tore it to shreds and showed me why it wouldn’t work: transformers have no idea of “numbers” or “spans”, so even if the model could hypothetically tell if two files contain content plagiarized from one another, it would have no reliable way to report the line spans back to the overseer consistently. For a real-world analogy, this is why LLMs have so much trouble counting the letters in words or doing numeric math problems: numbers are not something they can “understand”[^4].
 
 Coming out of this meeting, I was slightly dejected but also relieved that I could cut off a dead end. I had to do some soul searching in order to find my next architecture, but eventually I had a realization: why abandon the AST structure for the text contained within it, needlessly discarding essential position information encoded into the structure? This epiphany led me down a rabbit hole where I discovered graph neural networks and graph attention networks.
 
@@ -186,3 +187,5 @@ CodeCheck was yet another entry in my endless cycle of building. I ideate, I cre
 [^2]: Yes, I know about Structured Output Mode, but generating valid source code interspersed with arbitrary XML tags isn't exactly a supported use case.
 
 [^3]: An event that was, for some reason, rarer than you'd think given the terabytes of XML and HTML these models have ingested.
+
+[^4]: [Recent research](https://arxiv.org/pdf/2502.00873) has shown LLMs use really cool latent space structures to compute operations such as addition. While this is a very interesting finding, I do not believe this constitutes a fundamental understanding of numeric operations, especially since LLMs still tend to fail on more complex mathematical problems.
