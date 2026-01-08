@@ -11,19 +11,25 @@ const toggleColorStyle = isBlog ? "hidden md:flex" : "flex";
 <footer class="mt-4 w-full">
   {
     isBlog && (
-      <div class="justify-center flex mb-2">
+      <div class="justify-center flex mb-2 flex-col">
         <button
           class="hover:underline p-1 hover:-translate-y-1 transition-transform"
           onclick="window.scrollTo({top: 0, behavior: 'smooth'});"
         >
           ↑ Back to Top ↑
         </button>
+        <a
+          href="/blog"
+          class="hover:underline p-1 hover:-translate-x-1 transition-transform text-lg mx-auto"
+        >
+          ← Go Home ←
+        </a>
       </div>
     )
   }
 
   <div
-    class=`w-full ${toggleColorStyle} ${alwaysCenter ? "" : "md:justify-normal"} justify-center mb-2 underline hover:decoration-2 text-lg`
+    class=`w-full ${toggleColorStyle} ${alwaysCenter ? "" : "md:justify-normal"} justify-center mb-2 underline hover:decoration-2`
   >
     <button
       onclick="document.dispatchEvent(new CustomEvent('colortoggle', { detail: {} }))"
