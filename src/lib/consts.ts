@@ -6,3 +6,4 @@ export const IS_PROD = process.env.PUBLIC_VERCEL_ENV === "production";
 export const SITE_URL = IS_PROD
   ? "https://jackhogan.me/"
   : "https://staging.jackhogan.me/";
+export const BLOG_NAME = "Jack Hogan's Blog";

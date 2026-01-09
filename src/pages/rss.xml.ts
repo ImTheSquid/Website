@@ -1,5 +1,5 @@
 import rss from "@astrojs/rss";
-import { SITE_URL } from "@lib/consts";
+import { BLOG_NAME, SITE_URL } from "@lib/consts";
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
@@ -16,7 +16,7 @@ export const GET: APIRoute = async ({ site }) => {
       content: `http://purl.org/rss/1.0/modules/content/`,
       atom: `http://www.w3.org/2005/Atom`,
     },
-    title: "Jack Hogan's Blog",
+    title: BLOG_NAME,
     description: "Where Jack writes about whatever's on his mind.",
     site: site!,
     customData:

@@ -7,7 +7,13 @@ import FeedNav from "@components/FeedNav.svelte";
 import { ClientRouter } from "astro:transitions";
 import type { TransitionDirectionalAnimations } from "astro";
 import { SEO } from "astro-seo";
-import { OG_TITLE, OG_DESCRIPTION, SITE_URL, TAGLINE } from "@lib/consts";
+import {
+  OG_TITLE,
+  OG_DESCRIPTION,
+  SITE_URL,
+  TAGLINE,
+  BLOG_NAME,
+} from "@lib/consts";
 
 const path = Astro.url.pathname;
 
@@ -68,6 +74,12 @@ const animation: TransitionDirectionalAnimations = {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <meta name="darkreader-lock" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={BLOG_NAME}
+      href={new URL("rss.xml", Astro.site)}
+    />
     <title>Jack Hogan</title>
     <ClientRouter />
     <SEO
