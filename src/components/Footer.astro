@@ -13,7 +13,7 @@ const toggleColorStyle = isBlog ? "hidden md:flex" : "flex";
     isBlog && (
       <div class="justify-center flex mb-2 flex-col">
         <button
-          class="hover:underline p-1 hover:-translate-y-1 transition-transform"
+          class="hover:underline p-1 hover:-translate-y-1 transition-transform cursor-pointer"
           onclick="window.scrollTo({top: 0, behavior: 'smooth'});"
         >
           ↑ Back to Top ↑
@@ -32,6 +32,7 @@ const toggleColorStyle = isBlog ? "hidden md:flex" : "flex";
     class=`w-full ${toggleColorStyle} ${alwaysCenter ? "" : "md:justify-normal"} justify-center mb-2 underline hover:decoration-2`
   >
     <button
+      class="cursor-pointer"
       onclick="document.dispatchEvent(new CustomEvent('colortoggle', { detail: {} }))"
       >Toggle Color</button
     >
