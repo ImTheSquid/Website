@@ -32,12 +32,11 @@ const externalHostname = isExternal ? new URL(externalUrl).hostname : null;
 <div class="dot-control pb-10">
   <h2 class="font-title text-3xl md:text-4xl">
     <a
-      class="underline hover:decoration-4"
       href={linkHref}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
     >
-      {title}
+      <span class="underline hover:decoration-4">{title}</span>
       {
         isExternal && (
           <Icon
