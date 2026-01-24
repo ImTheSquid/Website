@@ -18,6 +18,7 @@ const blog = defineCollection({
     tags: z.array(z.string()),
     lastUpdateDate: z.date().optional(),
     description: z.string(),
+    externalUrl: z.string().url().optional(),
   }),
 });
 

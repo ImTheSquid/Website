@@ -16,7 +16,7 @@ export const getStaticPaths = (async () => {
 
 export async function GET({
   props: {
-    data: { title, publishDate },
+    data: { title, publishDate, externalUrl },
   },
 }: Props) {
   const date = publishDate
@@ -28,5 +28,10 @@ export async function GET({
       })
     : "DRAFT";
 
-  return getOgImage({ title, subtitle: `${date} • Jack Hogan` });
+  const externalLabel = externalUrl ? ` • External` : "";
+
+  return getOgImage({
+    title,
+    subtitle: `${date}${externalLabel} • Jack Hogan`,
+  });
 }

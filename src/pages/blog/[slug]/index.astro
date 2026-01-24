@@ -27,45 +27,68 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const {
-  data: { title, publishDate, tags, lastUpdateDate },
+  data: { title, publishDate, tags, lastUpdateDate, externalUrl },
   render,
 } = Astro.props;
 
-const { Content, headings } = await render();
+const isExternal = !!externalUrl;
+const externalHostname = isExternal ? new URL(externalUrl).hostname : null;
+
+const { Content, headings } = isExternal
+  ? { Content: null, headings: [] }
+  : await render();
 ---
 
-<BlogLayout entry={Astro.props}>
+<BlogLayout entry={Astro.props} externalUrl={externalUrl}>
   <div class="mt-10">
-    <a href="/blog" aria-label="Back to blog landing page"
-      ><Icon
+    <a href="/blog" aria-label="Back to blog landing page">
+      <Icon
         name="ri:arrow-left-line"
         size={40}
         class="hover:text-theme hover:-translate-x-1 ease-linear transition-all"
-      /></a
-    >
+      />
+    </a>
     <h1 class="font-title text-7xl mt-5 text-balance">{title}</h1>
     <h2 class="font-sans text-2xl">
       <BlogFormattedDate date={publishDate} />
     </h2>
     {
-      lastUpdateDate ? (
+      lastUpdateDate && !isExternal && (
         <h2 class="font-sans text-xl">
           Updated <FormattedDate date={lastUpdateDate} />
         </h2>
-      ) : (
-        ""
       )
     }
     <h3 class="text-lg font-sans mb-4">
-      Tags: <span class="font-mono"
-        >{
-          tags.map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)
-        }</span
-      >
+      Tags:{" "}
+      <span class="font-mono">
+        {tags.map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)}
+      </span>
     </h3>
 
     {
-      !publishDate && (
+      isExternal && (
+        <div class="border-2 border-dashed border-blue-500 p-4 my-6 text-xl flex items-center gap-3">
+          <Icon name="ri:external-link-line" size={32} />
+          <div>
+            <p class="font-sans">
+              This post is hosted externally on{" "}
+              <span class="font-mono">{externalHostname}</span>.
+            </p>
+            <p class="font-sans text-base mt-1">
+              Redirecting automatically, or{" "}
+              <a href={externalUrl} class="underline hover:decoration-2">
+                click here
+              </a>
+              .
+            </p>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      !isExternal && !publishDate && (
         <div class="border-2 border-dashed border-red-500 p-2 m-1 text-xl mb-4">
           <Icon name="ri:git-pr-draft-line" size={40} />
           This post is a draft! Please don&apos;t share it around.
@@ -74,31 +97,31 @@ const { Content, headings } = await render();
     }
 
     {
-      headings.length > 0 ? (
+      !isExternal && headings.length > 0 && (
         <TableOfContents headings={headings.filter((h) => h.depth <= 3)} />
-      ) : (
-        <span />
       )
     }
   </div>
-  <div
-    class="mt-8 sm:mt-12 mb-8 sm:mb-12 text-lg font-serif flex flex-col items-start gap-y-4 justify-center"
-  >
-    <Content
-      components={{
-        a: Link,
-        ul: UnorderedList,
-        ol: OrderedList,
-        h1: H1,
-        h2: H2,
-        h3: H3,
-        h4: H4,
-        hr: Hr,
-        img: Image,
-        blockquote: Blockquote,
-      }}
-    />
-  </div>
+  {
+    !isExternal && (
+      <div class="mt-8 sm:mt-12 mb-8 sm:mb-12 text-lg font-serif flex flex-col items-start gap-y-4 justify-center">
+        <Content
+          components={{
+            a: Link,
+            ul: UnorderedList,
+            ol: OrderedList,
+            h1: H1,
+            h2: H2,
+            h3: H3,
+            h4: H4,
+            hr: Hr,
+            img: Image,
+            blockquote: Blockquote,
+          }}
+        />
+      </div>
+    )
+  }
 </BlogLayout>
 
 <style is:global>

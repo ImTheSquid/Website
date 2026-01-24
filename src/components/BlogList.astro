@@ -36,6 +36,7 @@ const { tagFilter } = Astro.props;
             lastUpdatedDate={post.data.lastUpdateDate}
             tags={post.data.tags}
             href=`/blog/${post.slug}`
+            externalUrl={post.data.externalUrl}
           />
         ))
     }

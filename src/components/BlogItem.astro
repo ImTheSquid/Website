@@ -2,6 +2,8 @@
 import BlogFormattedDate from "./BlogFormattedDate.astro";
 import BlogTag from "./BlogTag.astro";
 import FormattedDate from "./FormattedDate.astro";
+import { Icon } from "astro-icon/components";
+
 interface Props {
   title: string;
   publishDate?: Date;
@@ -9,15 +11,43 @@ interface Props {
   tags: string[];
   description: string;
   href: string;
+  externalUrl?: string;
 }
 
-const { title, publishDate, lastUpdatedDate, tags, description, href } =
-  Astro.props;
+const {
+  title,
+  publishDate,
+  lastUpdatedDate,
+  tags,
+  description,
+  href,
+  externalUrl,
+} = Astro.props;
+
+const isExternal = !!externalUrl;
+const linkHref = isExternal ? externalUrl : href;
+const externalHostname = isExternal ? new URL(externalUrl).hostname : null;
 ---
 
 <div class="dot-control pb-10">
   <h2 class="font-title text-3xl md:text-4xl">
-    <a class="underline hover:decoration-4" href={href}>{title}</a>
+    <a
+      class="underline hover:decoration-4"
+      href={linkHref}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+    >
+      {title}
+      {
+        isExternal && (
+          <Icon
+            name="ri:external-link-line"
+            class="inline-block ml-1 align-baseline"
+            size={24}
+          />
+        )
+      }
+    </a>
   </h2>
   <h3
     class="font-sans italic text-xl md:text-2xl break-words py-2 text-neutral-600 dark:text-neutral-400"
@@ -29,6 +59,13 @@ const { title, publishDate, lastUpdatedDate, tags, description, href } =
         tags.map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)
       }</span
     >
+    {
+      isExternal && (
+        <span class="not-italic">
+          • <span class="font-mono">{externalHostname}</span>
+        </span>
+      )
+    }
   </h3>
   <p class="font-serif md:text-lg">
     {description}

@@ -9,6 +9,7 @@ import { SITE_URL } from "@lib/consts";
 
 interface Props {
   entry: CollectionEntry<"blog">;
+  externalUrl?: string;
 }
 
 const {
@@ -16,7 +17,16 @@ const {
     data: { title, description },
     slug,
   },
+  externalUrl,
 } = Astro.props;
+
+const isExternal = !!externalUrl;
+const externalHostname = isExternal ? new URL(externalUrl).hostname : null;
+const ogTitle = isExternal ? `${title} (External)` : title;
+const ogDescription = isExternal ? `${description} (External post on ${externalHostname})` : description;
+const ogImageAlt = isExternal
+  ? `A blog post by Jack titled "${title}" (hosted on ${externalHostname})`
+  : `A blog post by Jack titled "${title}"`;
 ---
 
 <!doctype html>
@@ -26,57 +36,61 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.css"
-      integrity="sha384-Pu5+C18nP5dwykLJOhd2U4Xen7rjScHN/qusop27hdd2drI+lL5KvX7YntvT8yew"
-      crossorigin="anonymous"
-    />
+    {externalUrl && <meta http-equiv="refresh" content={`3;url=${externalUrl}`} />}
 
-    <!-- The loading of KaTeX is deferred to speed up page rendering -->
-    <script
-      defer
-      is:inline
-      src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.js"
-      integrity="sha384-2B8pfmZZ6JlVoScJm/5hQfNS2TI/6hPqDZInzzPc8oHpN5SgeNOf4LzREO6p5YtZ"
-      crossorigin="anonymous"></script>
+    {!isExternal && (
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.css"
+        integrity="sha384-Pu5+C18nP5dwykLJOhd2U4Xen7rjScHN/qusop27hdd2drI+lL5KvX7YntvT8yew"
+        crossorigin="anonymous"
+      />
 
-    <!-- To automatically render math in text elements, include the auto-render extension: -->
-    <script
-      defer
-      is:inline
-      src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/contrib/auto-render.min.js"
-      integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
-      crossorigin="anonymous"
-      onload="renderMathInElement(document.body);"></script>
+      <!-- The loading of KaTeX is deferred to speed up page rendering -->
+      <script
+        defer
+        is:inline
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.js"
+        integrity="sha384-2B8pfmZZ6JlVoScJm/5hQfNS2TI/6hPqDZInzzPc8oHpN5SgeNOf4LzREO6p5YtZ"
+        crossorigin="anonymous"></script>
+
+      <!-- To automatically render math in text elements, include the auto-render extension: -->
+      <script
+        defer
+        is:inline
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/contrib/auto-render.min.js"
+        integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+        crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    )}
 
     <meta name="generator" content={Astro.generator} />
     <meta name="darkreader-lock" />
     <title>{title} | Jack Hogan</title>
     <ClientRouter />
     <SEO
-      title={title}
-      description={description}
+      title={ogTitle}
+      description={ogDescription}
       openGraph={{
         basic: {
           type: "website",
-          title,
+          title: ogTitle,
           image: `${SITE_URL}/blog/${slug}/og.png`,
         },
         optional: {
-          description,
+          description: ogDescription,
           locale: "en-US",
           siteName: "jackhogan.me",
         },
         image: {
-          alt: `A blog post by Jack titled "${title}"`,
+          alt: ogImageAlt,
         },
       }}
       twitter={{
-        title,
-        description,
+        title: ogTitle,
+        description: ogDescription,
         image: `${SITE_URL}/blog/${slug}/og.png`,
-        imageAlt: `A blog post by Jack titled "${title}"`,
+        imageAlt: ogImageAlt,
         card: "summary_large_image",
         site: "jackhogan.me",
         creator: "Jack Hogan",
