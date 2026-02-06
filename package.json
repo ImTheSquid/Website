@@ -24,6 +24,7 @@
     "astro": "^5.17.1",
     "astro-icon": "^1.1.5",
     "astro-seo": "^0.8.4",
+    "gab-astro-compress": "^0.1.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "rehype-katex": "^7.0.1",
