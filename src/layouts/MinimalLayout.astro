@@ -1,5 +1,6 @@
 ---
 import "@styles/global.css";
+import { Font } from "astro:assets";
 interface Props {
   name: string;
 }
@@ -15,6 +16,10 @@ const { name } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <meta name="darkreader-lock" />
+    <Font cssVariable="--font-sans" preload />
+    <Font cssVariable="--font-serif" />
+    <Font cssVariable="--font-mono" />
+    <Font cssVariable="--font-title" />
     <title>{name} | Jack Hogan</title>
   </head>
   <body

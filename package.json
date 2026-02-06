@@ -21,7 +21,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vercel/og": "^0.6.8",
-    "astro": "^5.16.5",
+    "astro": "^5.17.1",
     "astro-icon": "^1.1.5",
     "astro-seo": "^0.8.4",
     "react": "^19.2.3",
@@ -35,7 +35,7 @@
     "typescript": "^5.9.3",
     "vercel": "^50.0.0"
   },
-    "devDependencies": {
+  "devDependencies": {
     "@iconify-json/ri": "^1.2.6",
     "@svelte-put/qr": "^2.1.1",
     "prettier": "^3.7.4",
