@@ -19,9 +19,11 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 
+import subsetFonts from "./src/integrations/subset-fonts.js";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [mdx(), svelte(), icon()],
+  integrations: [mdx(), svelte(), icon(), subsetFonts()],
   adapter: vercel({
     webAnalytics: {
       enabled: true,
