@@ -11,8 +11,6 @@ import arraybuffer from "vite-plugin-arraybuffer";
 
 import { dataUrl } from "vite-plugin-data-url";
 
-import react from "@astrojs/react";
-
 import tailwindcss from "@tailwindcss/vite";
 
 import icon from "astro-icon";
@@ -23,7 +21,7 @@ import remarkGfm from "remark-gfm";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [mdx(), svelte(), react(), icon()],
+  integrations: [mdx(), svelte(), icon()],
   adapter: vercel({
     webAnalytics: {
       enabled: true,
@@ -52,7 +50,7 @@ export default defineConfig({
         provider: fontProviders.google(),
         name: "DM Sans",
         cssVariable: "--font-sans",
-        weights: ["100 1000"],
+        weights: [400, 700],
         fallbacks: ["sans-serif"],
       },
       {
@@ -66,7 +64,7 @@ export default defineConfig({
         provider: fontProviders.google(),
         name: "DM Mono",
         cssVariable: "--font-mono",
-        weights: [300, 400, 500],
+        weights: [400],
         fallbacks: ["monospace"],
       },
       {

@@ -4,13 +4,12 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && bun scripts/subset-fonts.js",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
-    "@astrojs/react": "^4.4.2",
     "@astrojs/rss": "^4.0.14",
     "@astrojs/svelte": "^7.2.3",
     "@astrojs/ts-plugin": "^1.10.6",
@@ -41,6 +40,7 @@
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-svelte": "^3.4.0",
+    "subset-font": "^2.4.0",
     "vite-plugin-arraybuffer": "^0.0.8",
     "vite-plugin-data-url": "^1.0.0"
   }
