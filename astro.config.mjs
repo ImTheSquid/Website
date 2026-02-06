@@ -16,7 +16,6 @@ import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 
 import icon from "astro-icon";
-import astroCompress from "gab-astro-compress";
 
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
@@ -24,7 +23,7 @@ import remarkGfm from "remark-gfm";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [mdx(), svelte(), react(), icon(), astroCompress()],
+  integrations: [mdx(), svelte(), react(), icon()],
   adapter: vercel({
     webAnalytics: {
       enabled: true,
