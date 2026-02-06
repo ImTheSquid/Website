@@ -1,5 +1,6 @@
 ---
 import "@styles/global.css";
+import { Font } from "astro:assets";
 import DotGrid from "@components/DotGrid.astro";
 import Footer from "@components/Footer.astro";
 import NameAndLinks from "@components/NameAndLinks.astro";
@@ -80,6 +81,10 @@ const animation: TransitionDirectionalAnimations = {
       title={BLOG_NAME}
       href={new URL("rss.xml", Astro.site)}
     />
+    <Font cssVariable="--font-sans" preload />
+    <Font cssVariable="--font-serif" />
+    <Font cssVariable="--font-mono" />
+    <Font cssVariable="--font-title" />
     <title>Jack Hogan</title>
     <ClientRouter />
     <SEO

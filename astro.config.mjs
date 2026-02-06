@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 
 import mdx from "@astrojs/mdx";
 
@@ -45,5 +45,36 @@ export default defineConfig({
   },
   vite: {
     plugins: [arraybuffer(), dataUrl({ limit: 100000000 }), tailwindcss()],
+  },
+  experimental: {
+    fonts: [
+      {
+        provider: fontProviders.google(),
+        name: "DM Sans",
+        cssVariable: "--font-sans",
+        weights: ["100 1000"],
+        fallbacks: ["sans-serif"],
+      },
+      {
+        provider: fontProviders.google(),
+        name: "Lora",
+        cssVariable: "--font-serif",
+        weights: ["400 700"],
+        fallbacks: ["serif"],
+      },
+      {
+        provider: fontProviders.google(),
+        name: "DM Mono",
+        cssVariable: "--font-mono",
+        weights: [300, 400, 500],
+        fallbacks: ["monospace"],
+      },
+      {
+        provider: fontProviders.google(),
+        name: "DM Serif Display",
+        cssVariable: "--font-title",
+        fallbacks: ["serif"],
+      },
+    ],
   },
 });
