@@ -127,8 +127,11 @@ export class DotCanvas {
     box,
     delta,
     useColor,
+    useNoise,
     scrollOffsetX,
     scrollOffsetY,
+    scrollX,
+    scrollY,
   }: RenderProps) {
     const uResolution = this.gl.getUniformLocation(
       this.program,
@@ -143,6 +146,8 @@ export class DotCanvas {
       this.program,
       "u_scrollOffset",
     )!;
+    const uScroll = this.gl.getUniformLocation(this.program, "u_scroll")!;
+    const uNoise = this.gl.getUniformLocation(this.program, "u_noise")!;
     const uBoxBrightness = this.gl.getUniformLocation(
       this.program,
       "u_boxBrightness",
@@ -160,6 +165,7 @@ export class DotCanvas {
     }
 
     this.gl.uniform2f(uScrollOffset, scrollOffsetX, scrollOffsetY);
+    this.gl.uniform2f(uScroll, scrollX, scrollY);
 
     // Update target box
     this.targetBox = box ? { ...box } : null;
@@ -173,10 +179,26 @@ export class DotCanvas {
 
     if (this.targetBox) {
       if (this.animatedBox) {
-        this.animatedBox.left = this.lerp(this.animatedBox.left, this.targetBox.left, easeFactor);
-        this.animatedBox.right = this.lerp(this.animatedBox.right, this.targetBox.right, easeFactor);
-        this.animatedBox.top = this.lerp(this.animatedBox.top, this.targetBox.top, easeFactor);
-        this.animatedBox.bottom = this.lerp(this.animatedBox.bottom, this.targetBox.bottom, easeFactor);
+        this.animatedBox.left = this.lerp(
+          this.animatedBox.left,
+          this.targetBox.left,
+          easeFactor,
+        );
+        this.animatedBox.right = this.lerp(
+          this.animatedBox.right,
+          this.targetBox.right,
+          easeFactor,
+        );
+        this.animatedBox.top = this.lerp(
+          this.animatedBox.top,
+          this.targetBox.top,
+          easeFactor,
+        );
+        this.animatedBox.bottom = this.lerp(
+          this.animatedBox.bottom,
+          this.targetBox.bottom,
+          easeFactor,
+        );
       } else {
         // Initialize animated box at target position
         this.animatedBox = { ...this.targetBox };
@@ -212,6 +234,7 @@ export class DotCanvas {
     this.gl.uniform2f(uMouse, mouseX, mouseY);
     this.gl.uniform1i(uDark, isDarkMode ? 1 : 0);
     this.gl.uniform1i(uColor, useColor ? 1 : 0);
+    this.gl.uniform1i(uNoise, useNoise ? 1 : 0);
 
     this.gl.drawArrays(this.gl.POINTS, 0, this.positions.length / 2);
   }
@@ -224,6 +247,9 @@ export interface RenderProps {
   delta: number;
   box: Box | null;
   useColor: boolean;
+  useNoise: boolean;
   scrollOffsetX: number;
   scrollOffsetY: number;
+  scrollX: number;
+  scrollY: number;
 }

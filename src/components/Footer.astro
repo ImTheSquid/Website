@@ -29,12 +29,18 @@ const toggleColorStyle = isBlog ? "hidden md:flex" : "flex";
   }
 
   <div
-    class=`w-full ${toggleColorStyle} ${alwaysCenter ? "" : "md:justify-normal"} justify-center mb-2 underline hover:decoration-2`
+    class=`w-full ${toggleColorStyle} ${alwaysCenter ? "" : "md:justify-normal"} justify-center mb-2`
   >
     <button
-      class="cursor-pointer"
+      class="cursor-pointer underline hover:decoration-2"
       onclick="document.dispatchEvent(new CustomEvent('colortoggle', { detail: {} }))"
       >Toggle Color</button
+    >
+    <span class="px-1">|</span>
+    <button
+      class="cursor-pointer underline hover:decoration-2"
+      onclick="document.dispatchEvent(new CustomEvent('noisetoggle', { detail: {} }))"
+      >Toggle Noise</button
     >
   </div>
 

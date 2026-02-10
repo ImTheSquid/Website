@@ -49,10 +49,17 @@ import "@styles/global.css";
   }
 
   let isColor = (window.localStorage.getItem("color") || "t") === "t";
+  let isNoise = (window.localStorage.getItem("noise") || "t") === "t";
 
   document.addEventListener("colortoggle", (e) => {
     isColor = !isColor;
     window.localStorage.setItem("color", isColor ? "t" : "f");
+  });
+
+  document.addEventListener("noisetoggle", (e) => {
+    isNoise = !isNoise;
+    window.localStorage.setItem("noise", isNoise ? "t" : "f");
+    startUpdating();
   });
 
   document.addEventListener("mousemove", (e) => {
@@ -101,8 +108,11 @@ import "@styles/global.css";
       mouseX,
       mouseY,
       useColor: isColor,
+      useNoise: isNoise,
       scrollOffsetX,
       scrollOffsetY,
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
     });
 
     if (shouldUpdate) {
