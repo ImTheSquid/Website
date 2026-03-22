@@ -30,6 +30,7 @@ export default defineConfig({
     },
     imageService: false,
     devImageService: "sharp",
+    isr: true,
   }),
   site: "https://jackhogan.me",
   markdown: {
