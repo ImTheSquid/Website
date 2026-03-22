@@ -55,7 +55,9 @@ const externalHostname = isExternal ? new URL(externalUrl).hostname : null;
     •
     <span class="whitespace-nowrap font-mono"
       >{
-        tags.map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)
+        tags
+          .toSorted()
+          .map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)
       }</span
     >
     {

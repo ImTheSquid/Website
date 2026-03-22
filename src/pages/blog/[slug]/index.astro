@@ -62,7 +62,11 @@ const { Content, headings } = isExternal
     <h3 class="text-lg font-sans mb-4">
       Tags:{" "}
       <span class="font-mono">
-        {tags.map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)}
+        {
+          tags
+            .toSorted()
+            .map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)
+        }
       </span>
     </h3>
 
