@@ -122,7 +122,7 @@ const ogImageAlt = isExternal
         <div class="px-4 items-center">
           <slot />
         </div>
-        <Footer alwaysCenter={true} isBlog={true} />
+        <Footer alwaysCenter={true} blogInfo={{title: ogTitle, tagline: ogDescription}} />
       </div>
     </div>
   </body>
