@@ -21,6 +21,9 @@ function sortEntries(a: typeof entries[0], b: typeof entries[0]) {
 }
 const { tagFilter } = Astro.props;
 ---
+{ tagFilter &&
+<h3 class="text-xl border-2 border-dashed p-2 m-1 mb-4">You're filtering for posts with the <pre class="inline">{tagFilter}</pre> tag. <a class="underline decoration-1 hover:decoration-2" href="/blog">Clear filter</a></h3>
+}
 <FeedContainer>
     {
       entries
