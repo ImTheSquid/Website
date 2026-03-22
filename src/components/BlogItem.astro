@@ -36,7 +36,7 @@ const externalHostname = isExternal ? new URL(externalUrl).hostname : null;
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
     >
-      <span class="underline hover:decoration-4">{title}</span>
+      <span class="underline decoration-2 hover:decoration-4">{title}</span>
       {
         isExternal && (
           <Icon

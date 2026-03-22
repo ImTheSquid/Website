@@ -24,7 +24,14 @@ const { src, alt, gif = false } = Astro.props;
 
 <script>
   import { Fancybox } from "@fancyapps/ui";
-  Fancybox.bind("[data-fancybox]");
+
+  function bindFancybox() {
+    Fancybox.destroy();
+    Fancybox.bind("[data-fancybox]");
+  }
+
+  bindFancybox();
+  document.addEventListener("astro:page-load", bindFancybox);
 </script>
 
 <style is:global>
