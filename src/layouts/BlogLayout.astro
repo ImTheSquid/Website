@@ -34,7 +34,7 @@ const ogImageAlt = isExternal
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     {externalUrl && <meta http-equiv="refresh" content={`3;url=${externalUrl}`} />}
@@ -131,5 +131,9 @@ const ogImageAlt = isExternal
   @import "@styles/global.css" reference;
   body {
     text-wrap: pretty;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   }
 </style>
