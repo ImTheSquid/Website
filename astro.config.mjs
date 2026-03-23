@@ -20,6 +20,7 @@ import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 
 import subsetFonts from "./src/integrations/subset-fonts.js";
+import { SITE_URL } from "./src/lib/consts.js";
 
 // https://astro.build/config
 export default defineConfig({
@@ -28,10 +29,11 @@ export default defineConfig({
     webAnalytics: {
       enabled: true,
     },
-    imageService: false,
+    imageService: true,
     devImageService: "sharp",
+    isr: true,
   }),
-  site: "https://jackhogan.me",
+  site: SITE_URL,
   markdown: {
     shikiConfig: {
       theme: "github-dark",

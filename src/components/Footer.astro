@@ -1,9 +1,11 @@
 ---
 interface Props {
   alwaysCenter?: boolean;
-  isBlog?: boolean;
+  blogInfo?: { title: string; tagline: string };
 }
-const { alwaysCenter = false, isBlog = false } = Astro.props;
+const { alwaysCenter = false, blogInfo = null } = Astro.props;
+const hnTitle = blogInfo ? encodeURI(`${blogInfo.title}: ${blogInfo.tagline}`) : null;
+const isBlog = !!blogInfo;
 const year = new Date().getFullYear();
 const toggleColorStyle = isBlog ? "hidden md:flex" : "flex";
 ---
@@ -12,18 +14,29 @@ const toggleColorStyle = isBlog ? "hidden md:flex" : "flex";
   {
     isBlog && (
       <div class="justify-center flex mb-2 flex-col">
-        <button
-          class="hover:underline p-1 hover:-translate-y-1 transition-transform cursor-pointer"
-          onclick="window.scrollTo({top: 0, behavior: 'smooth'});"
-        >
-          ↑ Back to Top ↑
-        </button>
         <a
-          href="/blog"
-          class="hover:underline p-1 hover:-translate-x-1 transition-transform text-lg mx-auto"
+          href=`https://news.ycombinator.com/submitlink?u=${Astro.url}&t=${hnTitle}`
+          target="_blank"
+          class="underline decoration-1 hover:decoration-2 mx-auto p-2 text-xl"
         >
-          ← Back to Blogs ←
+          Share to HN
         </a>
+        <div class="mx-auto text-lg">
+            <a
+              href="/blog"
+              class="hover:underline p-2 hover:-translate-x-1 transition-transform mx-auto inline-block"
+            >
+              ← Back to Blogs ←
+            </a>
+            <button
+              class="hover:underline p-2 hover:-translate-y-1 transition-transform cursor-pointer"
+              onclick="window.scrollTo({top: 0, behavior: 'smooth'});"
+            >
+              ↑ Back to Top ↑
+            </button>
+
+        </div >
+
       </div>
     )
   }

@@ -19,6 +19,8 @@ const blog = defineCollection({
     lastUpdateDate: z.date().optional(),
     description: z.string(),
     externalUrl: z.string().url().optional(),
+    // If title is bullshit/non-representative of content, then enable this
+    showDescriptionInPost: z.boolean().optional().default(false),
   }),
 });
 

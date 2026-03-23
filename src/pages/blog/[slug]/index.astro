@@ -27,7 +27,15 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const {
-  data: { title, publishDate, tags, lastUpdateDate, externalUrl },
+  data: {
+    title,
+    publishDate,
+    tags,
+    lastUpdateDate,
+    externalUrl,
+    showDescriptionInPost,
+    description,
+  },
   render,
 } = Astro.props;
 
@@ -49,6 +57,11 @@ const { Content, headings } = isExternal
       />
     </a>
     <h1 class="font-title text-7xl mt-5 text-balance">{title}</h1>
+    {
+      showDescriptionInPost && (
+        <h2 class="font-serif italic text-2xl pt-1 pb-2">{description}</h2>
+      )
+    }
     <h2 class="font-sans text-2xl">
       <BlogFormattedDate date={publishDate} />
     </h2>
@@ -62,7 +75,11 @@ const { Content, headings } = isExternal
     <h3 class="text-lg font-sans mb-4">
       Tags:{" "}
       <span class="font-mono">
-        {tags.map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)}
+        {
+          tags
+            .toSorted()
+            .map((t, i) => <BlogTag tag={t} comma={i < tags.length - 1} />)
+        }
       </span>
     </h3>
 

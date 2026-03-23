@@ -6,9 +6,11 @@ import { getCollection } from "astro:content";
 export const GET: APIRoute = async ({ site }) => {
   const posts = await getCollection("blog");
 
-  const sorted_posts = posts.sort(
-    (a, b) => Number(b.data.publishDate) - Number(a.data.publishDate),
-  );
+  const sorted_posts = posts
+    .filter((post) => post.data.publishDate)
+    .sort(
+      (a, b) => Number(b.data.publishDate) - Number(a.data.publishDate),
+    );
 
   return rss({
     xmlns: {
