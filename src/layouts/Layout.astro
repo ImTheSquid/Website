@@ -5,6 +5,7 @@ import DotGrid from "@components/DotGrid.astro";
 import Footer from "@components/Footer.astro";
 import NameAndLinks from "@components/NameAndLinks.astro";
 import FeedNav from "@components/FeedNav.svelte";
+import InlineFavicon from "@components/InlineFavicon.astro";
 import { ClientRouter } from "astro:transitions";
 import type { TransitionDirectionalAnimations } from "astro";
 import { SEO } from "astro-seo";
@@ -72,7 +73,7 @@ const animation: TransitionDirectionalAnimations = {
     {!indexable && <meta name="robots" content="noindex" />}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <InlineFavicon />
     <meta name="generator" content={Astro.generator} />
     <meta name="darkreader-lock" />
     <link

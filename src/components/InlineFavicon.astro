@@ -1,0 +1,10 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+
+const faviconPath = path.resolve("public/favicon.svg");
+const svgContent = fs.readFileSync(faviconPath, "utf-8");
+const encoded = `data:image/svg+xml,${encodeURIComponent(svgContent.trim())}`;
+---
+
+<link rel="icon" type="image/svg+xml" href={encoded} />
