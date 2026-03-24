@@ -31,7 +31,9 @@ export default defineConfig({
     },
     imageService: true,
     devImageService: "sharp",
-    isr: true,
+    isr: {
+      exclude: ["/passport"],
+    },
   }),
   site: SITE_URL,
   markdown: {
